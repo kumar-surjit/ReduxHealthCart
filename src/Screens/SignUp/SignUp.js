@@ -12,14 +12,99 @@ import colors from '../../styles/colors';
 import InputText from '../../Components/InputText';
 import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
+import navigationStrings from '../../constants/navigationStrings';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 export default class SignUp extends Component {
+  state = {
+    email: '',
+    password: '',
+    name: '',
+    isSecure: true,
+  };
+
+  changeState = (stateVar, newValue) => {
+    // console.log('inside changeState', stateVar === 'name');
+    switch (stateVar) {
+      case 'email':
+        // console.log('this is newValue:', newValue);
+        this.setState({
+          email: newValue,
+        });
+        break;
+      case 'password':
+        // console.log('this is newValue:', newValue);
+        this.setState({
+          password: newValue,
+        });
+        break;
+      case 'name':
+        // console.log('this is newValue:', newValue);
+        this.setState({
+          name: newValue,
+        });
+        break;
+    }
+  };
+
+  checkValidity = () => {
+    const {
+      email,
+      password,
+      name,
+    } = this.state;
+    console.log(email, password, name);
+    let data = {
+      email: email,
+      languageCode: 'EN',
+      signupType: 'APP',
+      password: password,
+      name: name,
+    };
+    if (email !== '' || password !== '' || name !== '') {
+      this.signUpUser(data);
+      console.log('Valid');
+    } else {
+      showMessage({
+        message: 'Invalid Details',
+        description: 'Please check the entered fields',
+        type: 'danger',
+      });
+      console.log('Not Valid');
+    }
+  };
+
+  signUpUser = (value) => {
+    console.log('inside signup user');
+    signUp(value)
+    .then((res) => this.props.navigation.navigate(navigationStrings.Home))
+    .catch((err) => console.log("i'm not here"));
+    // registerUser(value)
+    //   .then((res) => {
+    //     console.log('response', res);
+    //     showMessage({
+    //       type: 'success',
+    //       message: 'Successfully Signed in',
+    //     });
+    //     this.props.navigation.dispatch(
+    //       StackActions.replace(navigationStrings.HomeTab),
+    //     );
+    //   })
+    //   .catch((err) => {
+    //     console.log('error', err);
+    //     showMessage({
+    //       type: 'danger',
+    //       message: "Couldn't Signed in",
+    //     });
+    //   });
+  };
+
   render() {
     return (
       <View style={{backgroundColor: colors.AuthBgColor, flex: 1}}>
         <View style={styles.headerStyle}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>Sign Up</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <MaterialCommunityIcons name="close" size={25} />
           </TouchableOpacity>
         </View>
@@ -30,13 +115,38 @@ export default class SignUp extends Component {
             anyone.
           </Text>
           <InputText
+              placeholder="Enter Name"
+              style={styles.inputTextStyle}
+              containerStyle={styles.inputContainerStyle}
+              focus={true}
+              type='name'
+              changeState={this.changeState}
+            />
+            <InputText
+              placeholder="Enter Email"
+              style={[styles.inputTextStyle, {marginTop: 16}]}
+              focus={false}
+              type='email'
+              changeState={this.changeState}
+            />
+            <InputText
+              placeholder="Enter Password"
+              style={[styles.inputTextStyle, {marginTop: 16}]}
+              focus={true}
+              secure={true}
+              type='password'
+              changeState={this.changeState}
+            />
+          {/* <InputText
             placeholder="Enter Mobile Number"
             style={styles.inputTextStyle}
-          />
+            focus={true}
+          /> */}
           <AuthButton
             label="Sign Up"
             buttonStyle={styles.buttonStyle}
             buttonTextStyle={styles.buttonTextStyle}
+            onPress={this.checkValidity}
           />
           <Text style={{color: '#919392', marginTop: 15, textAlign: 'center'}}>
             By signing up you agree to our{' '}
@@ -85,10 +195,20 @@ export default class SignUp extends Component {
               />
             </TouchableOpacity>
           </View>
-          <Text style={{fontSize: 16, textAlign: 'center', marginTop: 20}}>
-            Already have an account?{' '}
-            <Text style={{color: colors.themeGreen}}>Log In</Text>
-          </Text>
+          <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 20,
+                justifyContent: 'center',
+              }}>
+              <Text style={{fontSize: 16, textAlign: 'center'}}>
+              Already have an account?{' '}</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate(navigationStrings.Login)}>
+                <Text style={{color: colors.themeGreen, fontSize: 16}}>
+                Log In
+                </Text>
+              </TouchableOpacity>
+            </View>
           {/* <TouchableOpacity
             style={styles.buttonStyle}
             onPress={() => {

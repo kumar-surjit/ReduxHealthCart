@@ -1,3 +1,3 @@
 export default {
-  ADD_USER: 'ADD_USER',
+  SAVE_USER_DATA: 'SAVE_USER_DATA',
 };

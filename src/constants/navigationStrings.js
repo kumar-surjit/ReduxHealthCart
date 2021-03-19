@@ -3,4 +3,6 @@ export default {
   SignUp: 'SignUp',
   LandingPage: 'LandingPage',
   AuthPage: 'AuthPage',
+  Home: 'Home',
+  OtpVerification: 'OtpVerification'
 };

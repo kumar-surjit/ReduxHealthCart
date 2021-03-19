@@ -5,14 +5,77 @@ import colors from '../../styles/colors';
 import InputText from '../../Components/InputText';
 import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
+import navigationStrings from '../../constants/navigationStrings';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 export default class Login extends Component {
+  state = {
+    email: '',
+    password: '',
+    name: '',
+    isSecure: true,
+  };
+
+  changeState = (stateVar, newValue) => {
+    console.log('inside changeState', stateVar === 'name');
+    switch (stateVar) {
+      case 'email':
+        console.log('this is newValue:', newValue);
+        this.setState({
+          email: newValue,
+        });
+        break;
+      case 'password':
+        console.log('this is newValue:', newValue);
+        this.setState({
+          password: newValue,
+        });
+        break;
+      case 'name':
+        console.log('this is newValue:', newValue);
+        this.setState({
+          name: newValue,
+        });
+        break;
+    }
+  };
+
+  checkValidity = () => {
+    const {
+      isEmailValid,
+      isPasswordValid,
+      isNameValid,
+      email,
+      password,
+      name,
+    } = this.state;
+    console.log(email, password, name);
+    let data = {
+      email: email,
+      languageCode: 'EN',
+      signupType: 'APP',
+      password: password,
+      name: name,
+    };
+    if (isEmailValid && isPasswordValid && isNameValid) {
+      this.signUpUser(data);
+      console.log('Valid');
+    } else {
+      showMessage({
+        message: 'Invalid Details',
+        description: 'Please check the entered fields',
+        type: 'danger',
+      });
+      console.log('Not Valid');
+    }
+  };
+
   render() {
     return (
       <View style={{flex: 1}}>
         <View style={styles.headerStyle}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>Log In</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <MaterialCommunityIcons name="close" size={25} />
           </TouchableOpacity>
         </View>
@@ -20,16 +83,22 @@ export default class Login extends Component {
         <View style={styles.contentContainer}>
           <View style={{marginVertical: 15}}>
             <InputText
-              placeholder="Enter your phone no"
+              placeholder="Enter Email"
               style={styles.inputTextStyle}
-              containerStyle={styles.inputContainerStyle}
+              focus={false}
+              type="email"
+              changeState={this.changeState}
             />
             <InputText
               placeholder="Enter Password"
-              style={styles.inputTextStyle}
+              style={[styles.inputTextStyle, {marginTop: 16}]}
+              focus={false}
+              type="password"
+              secure={true}
+              changeState={this.changeState}
             />
             <View style={styles.helpTextStyle}>
-              <Text style={{color: '#929292'}}>Show Password</Text>
+              {/* <Text style={{color: '#929292'}}>Show Password</Text> */}
               <TouchableOpacity>
                 <Text style={{color: '#929292'}}>Forgot Password?</Text>
               </TouchableOpacity>
@@ -38,6 +107,11 @@ export default class Login extends Component {
               label="Log In"
               buttonStyle={styles.buttonStyle}
               buttonTextStyle={styles.buttonTextStyle}
+              onPress={() =>
+                this.props.navigation.navigate(
+                  navigationStrings.OtpVerification,
+                )
+              }
             />
             <View
               style={{
@@ -82,10 +156,24 @@ export default class Login extends Component {
                 />
               </TouchableOpacity>
             </View>
-            <Text style={{fontSize: 16, textAlign: 'center', marginTop: 20}}>
-              New to HealthKart?{' '}
-              <Text style={{color: colors.themeGreen}}>Sign Up</Text>
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 20,
+                justifyContent: 'center',
+              }}>
+              <Text style={{fontSize: 16, textAlign: 'center'}}>
+                New to HealthKart?{' '}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate(navigationStrings.SignUp)
+                }>
+                <Text style={{color: colors.themeGreen, fontSize: 16}}>
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -122,7 +210,7 @@ const styles = StyleSheet.create({
   },
   helpTextStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     marginTop: 16,
     paddingHorizontal: 15,
   },

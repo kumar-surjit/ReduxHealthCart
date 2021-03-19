@@ -2,10 +2,16 @@ import React from 'react';
 import {TextInput, View} from 'react-native';
 
 export default function InputText(props) {
-  const {placeholder, style, containerStyle} = props;
+  const {placeholder, style, containerStyle, focus, type, secure} = props;
   return (
     <View style={containerStyle}>
-      <TextInput placeholder={placeholder} style={style} autoFocus={true} />
+      <TextInput
+        placeholder={placeholder}
+        style={style}
+        autoFocus={focus}
+        onChangeText={value => props.changeState(type, value)}
+        secureTextEntry={secure}
+      />
     </View>
   );
 }

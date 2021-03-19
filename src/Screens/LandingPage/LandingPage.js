@@ -15,6 +15,21 @@ export default class LandingPage extends Component {
     ],
     activeSlide: 0,
   };
+
+
+ getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@userData');
+    console.log(jsonValue);
+    if(jsonValue != null)
+      this.props.navigation.navigate(navigationStrings.Home);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch(e) {
+    return null;
+    // error reading value
+  }
+}
+
   _renderItem = ({item, index}) => {
     return (
       <View style={{justifyContent: 'center'}}>
@@ -51,6 +66,7 @@ export default class LandingPage extends Component {
       this._carousel.snapToItem(0);
       this.setState({activeSlide: 0});
     })
+    this.getData();
   }
 
   componentWillUnmount = () => {
