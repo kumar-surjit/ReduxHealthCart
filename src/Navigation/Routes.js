@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={navigationStrings.SignUp}>
+      <Stack.Navigator initialRouteName={navigationStrings.LandingPage}>
         {AuthStack()}
       </Stack.Navigator>
     </NavigationContainer>
