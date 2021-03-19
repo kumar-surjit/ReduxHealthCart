@@ -103,12 +103,19 @@ const styles = StyleSheet.create({
   },
   inputTextStyle: {
     borderColor: colors.themeGreen,
-    borderWidth: 2,
-    borderRadius: 40,
+    borderWidth: 1,
+    borderRadius: 8,
     paddingHorizontal: 25,
   },
+
+  buttonStyle: {
+    backgroundColor: colors.themeGreen,
+    paddingVertical: 15,
+    marginTop: 32,
+    borderRadius: 4,
+  },
   inputContainerStyle: {
-    marginVertical: 15,
+    marginVertical: 16,
   },
   contentContainer: {
     paddingHorizontal: 15,
@@ -116,14 +123,8 @@ const styles = StyleSheet.create({
   helpTextStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 8,
+    marginTop: 16,
     paddingHorizontal: 15,
-  },
-  buttonStyle: {
-    backgroundColor: colors.themeGreen,
-    paddingVertical: 15,
-    marginTop: 40,
-    borderRadius: 40,
   },
   buttonTextStyle: {
     color: '#fff',

@@ -25,7 +25,7 @@ export default class SignUp extends Component {
         </View>
         <View style={{backgroundColor: '#b8b8b8', height: 1.5}} />
         <View style={styles.contentContainer}>
-          <Text style={{marginTop: 16, marginBottom: 20}}>
+          <Text style={{marginTop: 16, marginBottom: 20, fontSize: 14}}>
             Your number is safe with us. We won't share your details with
             anyone.
           </Text>
@@ -46,6 +46,7 @@ export default class SignUp extends Component {
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
+              alignItems: 'center',
               marginTop: 30,
             }}>
             <View style={styles.lineStyle} />
@@ -117,8 +118,8 @@ const styles = StyleSheet.create({
 
   inputTextStyle: {
     borderColor: colors.themeGreen,
-    borderWidth: 2,
-    borderRadius: 40,
+    borderWidth: 1,
+    borderRadius: 8,
     paddingHorizontal: 25,
   },
 
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.themeGreen,
     paddingVertical: 15,
     marginTop: 40,
-    borderRadius: 40,
+    borderRadius: 4,
   },
   buttonTextStyle: {
     color: '#fff',
