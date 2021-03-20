@@ -17,7 +17,6 @@ import {connect} from 'react-redux';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 class Home extends Component {
-    
   state = {
     productsArray: [
       {
@@ -26,8 +25,7 @@ class Home extends Component {
         price: '995',
         discountedPrice: '646',
         discount: '35% OFF',
-        coverImg:
-          imagePath.slider_img1,
+        coverImg: imagePath.slider_img1,
         rating: '3.9',
         sizes: [6, 7, 8, 9, 10, 11],
         imageCarousel: [
@@ -44,8 +42,7 @@ class Home extends Component {
         price: '3,499',
         discountedPrice: '1,924',
         discount: '45% OFF',
-        coverImg:
-        imagePath.slider_img2,
+        coverImg: imagePath.slider_img2,
         rating: '3.9',
         sizes: [10, 11],
         imageCarousel: [
@@ -62,8 +59,7 @@ class Home extends Component {
         price: '3,499',
         discountedPrice: '2,274',
         discount: '35% OFF',
-        coverImg:
-        imagePath.slider_img3,
+        coverImg: imagePath.slider_img3,
         rating: '4.8',
         sizes: [6, 7, 10, 11],
         imageCarousel: [
@@ -80,8 +76,7 @@ class Home extends Component {
         price: '2,699',
         discountedPrice: '1,349',
         discount: '50% OFF',
-        coverImg:
-        imagePath.slider_img4,
+        coverImg: imagePath.slider_img4,
         rating: '4.5',
         sizes: [6, 7, 8, 9, 10, 11],
         imageCarousel: [
@@ -96,8 +91,7 @@ class Home extends Component {
         price: '1,990',
         discountedPrice: '796',
         discount: '60% OFF',
-        coverImg:
-        imagePath.slider_img5,
+        coverImg: imagePath.slider_img5,
         rating: '4.3',
         sizes: [7, 8, 9, 10, 11],
         imageCarousel: [
@@ -113,8 +107,7 @@ class Home extends Component {
         price: '4,249',
         discountedPrice: '849',
         discount: '80% OFF',
-        coverImg:
-        imagePath.slider_img6,
+        coverImg: imagePath.slider_img6,
         rating: '3.9',
         sizes: [6, 7, 8],
         imageCarousel: [
@@ -132,8 +125,7 @@ class Home extends Component {
         price: '12,999',
         discountedPrice: '9,099',
         discount: '30% OFF',
-        coverImg:
-        imagePath.slider_img1,
+        coverImg: imagePath.slider_img1,
         rating: '4.7',
         sizes: [7, 8, 10, 11],
         imageCarousel: [
@@ -163,7 +155,7 @@ class Home extends Component {
           const {itemsInCart, cartItems} = this.state;
           let newProduct = this.props.route.params.product;
           let result = cartItems.findIndex(
-            (singleProduct) =>
+            singleProduct =>
               JSON.stringify(singleProduct.product) ===
               JSON.stringify(newProduct),
           );
@@ -202,7 +194,7 @@ class Home extends Component {
     // console.log('willunmount');
   }
 
-  changeItemsinCart = (changeType) => {
+  changeItemsinCart = changeType => {
     const {itemsInCart} = this.state;
     let prevState = itemsInCart;
     if (prevState == 0 && changeType === 'subtract') return;
@@ -236,9 +228,7 @@ class Home extends Component {
             details: item,
           })
         }>
-        <ImageBackground
-          source={item.coverImg}
-          style={styles.coverImgStyle}>
+        <ImageBackground source={item.coverImg} style={styles.coverImgStyle}>
           <View style={styles.ratingContianer}>
             <Text style={styles.ratingText}>{item.rating}</Text>
             <MaterialCommunityIcons
@@ -356,25 +346,24 @@ class Home extends Component {
         </View> */}
         <Text style={styles.headingStyle}>CASUAL SHOES</Text>
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           data={productsArray}
           renderItem={this.renderItem}
           numColumns="2"
           style={{marginBottom: 95}}
         />
-        
       </SafeAreaView>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return {
-        products: state.products,
-        // carouselImage: state.carouselImage,
-        cartCount: state.cartCount
-    }
-}
+  return {
+    products: state.products,
+    // carouselImage: state.carouselImage,
+    cartCount: state.cartCount,
+  };
+};
 
 const mapDispatchToProps = {};
 
@@ -416,7 +405,7 @@ const styles = StyleSheet.create({
   },
   coverImgStyle: {
     height: 250,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   ratingContianer: {
     backgroundColor: '#fff',
@@ -455,4 +444,3 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 });
-

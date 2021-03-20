@@ -6,14 +6,19 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
-import {signUp} from '../../redux/actions/authActions';
+import actions from '../../redux/actions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../styles/colors';
 import InputText from '../../Components/InputText';
 import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
 import navigationStrings from '../../constants/navigationStrings';
-import { showMessage, hideMessage } from "react-native-flash-message";
+import {showMessage, hideMessage} from 'react-native-flash-message';
+import {
+  StackActions,
+  NavigationActions,
+  CommonActions,
+} from '@react-navigation/native';
 
 export default class SignUp extends Component {
   state = {
@@ -48,11 +53,7 @@ export default class SignUp extends Component {
   };
 
   checkValidity = () => {
-    const {
-      email,
-      password,
-      name,
-    } = this.state;
+    const {email, password, name} = this.state;
     console.log(email, password, name);
     let data = {
       email: email,
@@ -74,11 +75,20 @@ export default class SignUp extends Component {
     }
   };
 
-  signUpUser = (value) => {
+  signUpUser = value => {
     console.log('inside signup user');
-    signUp(value)
-    .then((res) => this.props.navigation.navigate(navigationStrings.Home))
-    .catch((err) => console.log("i'm not here"));
+    // this.props.navigation.navigate(navigationStrings.Home)
+    actions
+      .signUp(value)
+      .then(res =>
+        this.props.navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: navigationStrings.Home}],
+          }),
+        ),
+      )
+      .catch(err => console.log("i'm not here"));
     // registerUser(value)
     //   .then((res) => {
     //     console.log('response', res);
@@ -115,28 +125,28 @@ export default class SignUp extends Component {
             anyone.
           </Text>
           <InputText
-              placeholder="Enter Name"
-              style={styles.inputTextStyle}
-              containerStyle={styles.inputContainerStyle}
-              focus={true}
-              type='name'
-              changeState={this.changeState}
-            />
-            <InputText
-              placeholder="Enter Email"
-              style={[styles.inputTextStyle, {marginTop: 16}]}
-              focus={false}
-              type='email'
-              changeState={this.changeState}
-            />
-            <InputText
-              placeholder="Enter Password"
-              style={[styles.inputTextStyle, {marginTop: 16}]}
-              focus={true}
-              secure={true}
-              type='password'
-              changeState={this.changeState}
-            />
+            placeholder="Enter Name"
+            style={styles.inputTextStyle}
+            containerStyle={styles.inputContainerStyle}
+            focus={true}
+            type="name"
+            changeState={this.changeState}
+          />
+          <InputText
+            placeholder="Enter Email"
+            style={[styles.inputTextStyle, {marginTop: 16}]}
+            focus={false}
+            type="email"
+            changeState={this.changeState}
+          />
+          <InputText
+            placeholder="Enter Password"
+            style={[styles.inputTextStyle, {marginTop: 16}]}
+            focus={true}
+            secure={true}
+            type="password"
+            changeState={this.changeState}
+          />
           {/* <InputText
             placeholder="Enter Mobile Number"
             style={styles.inputTextStyle}
@@ -196,19 +206,23 @@ export default class SignUp extends Component {
             </TouchableOpacity>
           </View>
           <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 20,
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontSize: 16, textAlign: 'center'}}>
-              Already have an account?{' '}</Text>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate(navigationStrings.Login)}>
-                <Text style={{color: colors.themeGreen, fontSize: 16}}>
+            style={{
+              flexDirection: 'row',
+              marginTop: 20,
+              justifyContent: 'center',
+            }}>
+            <Text style={{fontSize: 16, textAlign: 'center'}}>
+              Already have an account?{' '}
+            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate(navigationStrings.Login)
+              }>
+              <Text style={{color: colors.themeGreen, fontSize: 16}}>
                 Log In
-                </Text>
-              </TouchableOpacity>
-            </View>
+              </Text>
+            </TouchableOpacity>
+          </View>
           {/* <TouchableOpacity
             style={styles.buttonStyle}
             onPress={() => {
