@@ -1,26 +1,42 @@
-import React, {useEffect} from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {useState} from 'react/cjs/react.development';
+import React, {useState, useEffect} from 'react';
+import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import WrapperComponent from '../../Components/WrapperContainer';
+
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import GradientButton from '../../Components/GradientButton';
-import WrapperContainer from '../../Components/WrapperContainer';
-import strings from '../../constants/lang';
-import {
-  moderateScaleVertical,
-  moderateScale,
-} from '../../styles/responsiveSize';
-import styles from './styles';
-import {otpTimerCounter} from '../../utils/helperFunctions';
-import colors from '../../styles/colors';
-import fontFamily from '../../styles/fontFamily';
-import imagePath from '../../constants/imagePath';
-const CELL_COUNT = 4;
-export default function OtpVerification({navigation}) {
+
+const styles = StyleSheet.create({
+  title: {textAlign: 'center', fontSize: 30, fontWeight: 'bold'},
+  subHeading: {
+    textAlign: 'center',
+    color: '#8F969B',
+    fontWeight: '500',
+    marginTop: 8,
+    fontSize: 18,
+  },
+  codeFieldRoot: {marginTop: 20},
+  cell: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    lineHeight: 48,
+    fontSize: 24,
+    textAlign: 'center',
+    backgroundColor: '#00C0BF',
+    color: '#fff',
+  },
+  focusCell: {
+    borderColor: '#000',
+  },
+});
+function App({navigation}) {
+  const CELL_COUNT = 5;
+
   const [state, setState] = useState({
     timer: 100,
     otp: '',
@@ -62,35 +78,36 @@ export default function OtpVerification({navigation}) {
   };
 
   const {timer} = state;
+
+  function otpTimerCounter(seconds) {
+    // alert(seconds)
+    let m = Math.floor(seconds / 60);
+    let s = seconds % 60;
+    m = m < 10 ? '0' + m : m;
+    s = s < 10 ? '0' + s : s;
+    return `${m}:${s}`;
+  }
   return (
-    <WrapperContainer>
-      <View style={styles.backContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
-          <Image source={imagePath.back} />
-        </TouchableOpacity>
+    <WrapperComponent>
+      <TouchableOpacity
+        style={{flex: 0.1, marginTop: 16}}
+        onPress={() => navigation.goBack()}>
+        <MaterialCommunityIcons name="arrow-left" size={35} />
+      </TouchableOpacity>
+      <View style={{flex: 0.3}}>
+        <Text style={styles.title}>Verify your{'\n'}Phone number</Text>
+        <Text style={styles.subHeading}>Enter your OTP code here</Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-          marginTop: moderateScaleVertical(88),
-          marginHorizontal: moderateScale(24),
-        }}>
-        <Text style={styles.header}>{strings.OTP_VERIFICATION}</Text>
-        <Text style={styles.txtSmall}>{strings.ENTER_OTP_SENT}</Text>
-        <View style={{height: moderateScaleVertical(50)}} />
+      <View style={{flex: 0.2}}>
         <CodeField
           ref={ref}
           {...propsOtp}
           value={state.otp}
           onChangeText={onChangeOtp}
           cellCount={CELL_COUNT}
-          rootStyle={styles.root}
-          blurOnSubmit
+          rootStyle={styles.codeFieldRoot}
           keyboardType="number-pad"
           textContentType="oneTimeCode"
-          selectionColor={colors.themeColor}
           renderCell={({index, symbol, isFocused}) => (
             <Text
               key={index}
@@ -100,41 +117,53 @@ export default function OtpVerification({navigation}) {
             </Text>
           )}
         />
-        <GradientButton
-          onPress={onVerifyOtp}
-          containerStyle={{marginTop: moderateScaleVertical(10)}}
-          btnText={strings.VERIFY_ACCOUNT}
-        />
-        {timer > 0 ? (
-          <View style={styles.bottomContainer}>
-            <Text style={{...styles.txtSmall, color: colors.textGreyLight}}>
-              {strings.RESEND_CODE_IN}
-              <Text
-                style={{
-                  color: colors.themeColor,
-                  fontFamily: fontFamily.futuraBtHeavy,
-                }}>
-                {`${otpTimerCounter(timer)} min`}
-              </Text>
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.bottomContainer}>
-            <Text style={{...styles.txtSmall, color: colors.textGreyLight}}>
-              {strings.DIDNT_GET_OTP}
-              <Text
-                onPress={_onResend}
-                style={{
-                  color: colors.themeColor,
-                  fontFamily: fontFamily.futuraBtHeavy,
-                }}>
-                {' '}
-                {strings.RESEND_CODE}
-              </Text>
-            </Text>
-          </View>
-        )}
       </View>
-    </WrapperContainer>
+      <TouchableOpacity
+        style={{
+          backgroundColor: '#00C0BF',
+          paddingVertical: 16,
+          borderRadius: 16,
+          marginBottom: 16,
+        }}>
+        <Text
+          style={{
+            color: '#fff',
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: 18,
+          }}>
+          CONFIRM
+        </Text>
+      </TouchableOpacity>
+      {timer > 0 ? (
+        <View style={{flex: 0.1}}>
+          <Text style={[styles.subHeading, {color: '#8F969B'}]}>
+            RESEND CODE{' '}
+            <Text
+              style={{
+                color: '#00C0BF',
+              }}>
+              {`${otpTimerCounter(timer)} min`}
+            </Text>
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.bottomContainer}>
+          <Text style={[styles.subHeading, {color: '#8F969B'}]}>
+            Didn't get OTP?
+            <Text
+              onPress={_onResend}
+              style={{
+                color: '#00C0BF',
+              }}>
+              {' '}
+              RESEND CODE
+            </Text>
+          </Text>
+        </View>
+      )}
+    </WrapperComponent>
   );
 }
+
+export default App;

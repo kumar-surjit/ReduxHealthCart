@@ -6,13 +6,13 @@ import InputText from '../../Components/InputText';
 import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
 import navigationStrings from '../../constants/navigationStrings';
-import { showMessage, hideMessage } from "react-native-flash-message";
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 export default class Login extends Component {
   state = {
     email: '',
     password: '',
-    name: '',
+    number: undefined,
     isSecure: true,
   };
 
@@ -31,34 +31,28 @@ export default class Login extends Component {
           password: newValue,
         });
         break;
-      case 'name':
+      case 'number':
         console.log('this is newValue:', newValue);
         this.setState({
-          name: newValue,
+          number: newValue,
         });
         break;
     }
   };
 
   checkValidity = () => {
-    const {
-      isEmailValid,
-      isPasswordValid,
-      isNameValid,
-      email,
-      password,
-      name,
-    } = this.state;
-    console.log(email, password, name);
-    let data = {
-      email: email,
-      languageCode: 'EN',
-      signupType: 'APP',
-      password: password,
-      name: name,
-    };
-    if (isEmailValid && isPasswordValid && isNameValid) {
-      this.signUpUser(data);
+    const {email, password, number} = this.state;
+    console.log(email, password, number);
+    // let data = {
+    //   email: email,
+    //   languageCode: 'EN',
+    //   signupType: 'APP',
+    //   password: password,
+    //   name: name,
+    // };
+    if (email != '' && password !== '' && number !== '') {
+      // this.signUpUser(data);
+      // this.props.navigation.navigate(navigationStrings.OtpVerification);
       console.log('Valid');
     } else {
       showMessage({
@@ -97,6 +91,15 @@ export default class Login extends Component {
               secure={true}
               changeState={this.changeState}
             />
+            <InputText
+              placeholder="Enter Phone no"
+              style={[styles.inputTextStyle, {marginTop: 16}]}
+              focus={false}
+              type="number"
+              secure={false}
+              changeState={this.changeState}
+              keyboardType="numeric"
+            />
             <View style={styles.helpTextStyle}>
               {/* <Text style={{color: '#929292'}}>Show Password</Text> */}
               <TouchableOpacity>
@@ -107,11 +110,7 @@ export default class Login extends Component {
               label="Log In"
               buttonStyle={styles.buttonStyle}
               buttonTextStyle={styles.buttonTextStyle}
-              onPress={() =>
-                this.props.navigation.navigate(
-                  navigationStrings.OtpVerification,
-                )
-              }
+              onPress={this.checkValidity}
             />
             <View
               style={{

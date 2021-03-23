@@ -9,7 +9,7 @@ import {
 } from '../../styles/responsiveSize';
 
 export default StyleSheet.create({
-  backContainer:{
+  backContainer: {
     height: moderateScaleVertical(80),
     borderBottomColor: colors.borderLight,
     borderBottomWidth: 2,
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     marginVertical: 30,
     justifyContent: 'space-between',
   },
- 
+
   title: {textAlign: 'center', fontSize: 30},
   codeFieldRoot: {marginTop: 20},
   cell: {

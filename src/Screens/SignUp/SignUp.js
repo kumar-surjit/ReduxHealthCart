@@ -14,11 +14,13 @@ import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
 import navigationStrings from '../../constants/navigationStrings';
 import {showMessage, hideMessage} from 'react-native-flash-message';
+import actionTypes from '../../redux/actionTypes';
 import {
   StackActions,
   NavigationActions,
   CommonActions,
 } from '@react-navigation/native';
+import store from '../../redux/store';
 
 export default class SignUp extends Component {
   state = {
@@ -77,36 +79,11 @@ export default class SignUp extends Component {
 
   signUpUser = value => {
     console.log('inside signup user');
-    // this.props.navigation.navigate(navigationStrings.Home)
+    // this.props.navigation.navigate(navigationStrings.HomeTab)
     actions
       .signUp(value)
-      .then(res =>
-        this.props.navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{name: navigationStrings.Home}],
-          }),
-        ),
-      )
+      .then(res => console.log(res))
       .catch(err => console.log("i'm not here"));
-    // registerUser(value)
-    //   .then((res) => {
-    //     console.log('response', res);
-    //     showMessage({
-    //       type: 'success',
-    //       message: 'Successfully Signed in',
-    //     });
-    //     this.props.navigation.dispatch(
-    //       StackActions.replace(navigationStrings.HomeTab),
-    //     );
-    //   })
-    //   .catch((err) => {
-    //     console.log('error', err);
-    //     showMessage({
-    //       type: 'danger',
-    //       message: "Couldn't Signed in",
-    //     });
-    //   });
   };
 
   render() {
@@ -142,7 +119,7 @@ export default class SignUp extends Component {
           <InputText
             placeholder="Enter Password"
             style={[styles.inputTextStyle, {marginTop: 16}]}
-            focus={true}
+            focus={false}
             secure={true}
             type="password"
             changeState={this.changeState}

@@ -1,11 +1,10 @@
-import { act } from 'react-test-renderer';
 import actionTypes from '../actionTypes';
+import imagePath from '../../constants/imagePath';
 
 const initialState = {
   userData: {},
-  products: [],
-//   carouselImage: [imagePath.slider_img1, imagePath.slider_img2, imagePath.slider_img3. imagePath.slider_img4, imagePath.slider_img5, imagePath.slider_img6],
-  cartCount: 0,
+  isLoggedIn: false,
+  otpUserId: '',
 };
 
 export default function (state = initialState, action) {
@@ -15,18 +14,25 @@ export default function (state = initialState, action) {
       // console.log('INSIDE REDUCER ,' , data);
       return {
         ...state,
-        userData: data
+        userData: data,
       };
     }
-
-    case actionTypes.addToCart: {
-      //   const {data} = action.payload;
-        console.log('INSIDE REDUCER ,' , data);
-        return {
-          ...state,
-        };
-      }
-
+    case actionTypes.LOGGED_IN: {
+      const {isLoggedIn} = action.payload;
+      console.log('LOGGED IN REDUCER', action);
+      return {
+        ...state,
+        isLoggedIn: isLoggedIn,
+      };
+    }
+    case actionTypes.LOG_OUT: {
+      const {isLoggedIn} = action.payload;
+      console.log('LOGGED OUT REDUCER', action);
+      return {
+        ...state,
+        isLoggedIn: isLoggedIn,
+      };
+    }
     default:
       return {
         ...state,

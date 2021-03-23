@@ -1,5 +1,5 @@
 import React from 'react';
-import {Home} from '../Screens';
+import {Home, Cart} from '../Screens';
 import navigationStrings from '../constants/navigationStrings';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -13,11 +13,6 @@ export default function MainStack() {
         component={Home}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name={navigationStrings.ProductDetails}
-        component={ProductDetails}
-        options={{headerShown: false}}
-      />
       <Stack.Screen
         name={navigationStrings.Cart}
         component={Cart}
@@ -27,6 +22,12 @@ export default function MainStack() {
           headerTitleStyle: {left: -18, fontSize: 17},
         }}
       />
+      {/* <Stack.Screen
+        name={navigationStrings.ProductDetails}
+        component={ProductDetails}
+        options={{headerShown: false}}
+      />
+      
       <Stack.Screen
         name={navigationStrings.OrderConfirm}
         component={OrderConfirm}

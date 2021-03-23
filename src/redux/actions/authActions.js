@@ -4,6 +4,8 @@ import store from '../store';
 import actionTypes from '../actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const {dispatch} = store;
+
 const storeData = async value => {
   try {
     const jsonValue = JSON.stringify(value);
@@ -16,14 +18,17 @@ const storeData = async value => {
 };
 
 export function signUp(data) {
+  const tempData = {name: 'surjit'};
   return new Promise((resolve, reject) => {
-    storeData(data);
+    console.log(data);
+    storeData(tempData);
+    dispatch({type: actionTypes.LOGGED_IN, payload: {isLoggedIn: true}});
     resolve(data);
     // apiPost(SIGNUP, data)
     //   .then(res => {
     //     console.log('INSIDE AUTHACTIONS RESPOMSE', res);
 
-    //     store.dispatch({type: actionTypes.SAVE_USER_DATA, payload: data});
+    //
     //     resolve(res);
     //   })
     //   .catch(err => {
@@ -33,6 +38,9 @@ export function signUp(data) {
   });
 }
 
-export function login(data = {}) {
-  apiPost(LOGIN, {email: ''});
+export function logout() {
+  dispatch({
+    type: actionTypes.LOG_OUT,
+    payload: {isLoggedIn: false},
+  });
 }

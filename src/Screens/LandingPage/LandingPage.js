@@ -8,6 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackActions} from '@react-navigation/native';
 
 export default class LandingPage extends Component {
+  constructor(props) {
+    super(props);
+    // this.getData();
+  }
   state = {
     imageCarousel: [
       {
@@ -36,22 +40,6 @@ export default class LandingPage extends Component {
       console.log('successfully deleted data from Async Storage');
     } catch (error) {
       console.log('could not delete data from Async Storage ', error);
-    }
-  };
-
-  getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('userData');
-      console.log('got this value from Async Storage: ', jsonValue);
-      if (jsonValue != null)
-        this.props.navigation.dispatch(
-          StackActions.replace(navigationStrings.Home),
-        );
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      console.log('could not get data ', e);
-      return null;
-      // error reading value
     }
   };
 
@@ -93,7 +81,6 @@ export default class LandingPage extends Component {
       if (this._carousel != undefined) this._carousel.snapToItem(0);
       this.setState({activeSlide: 0});
     });
-    // this.getData();
   };
 
   componentWillUnmount = () => {
@@ -103,50 +90,50 @@ export default class LandingPage extends Component {
   render() {
     // this.removeData();
     const {imageCarousel, activeSlide} = this.state;
-    if (this.getData() != null) return <View></View>;
-    else
-      return (
-        <View style={styles.pageContainer}>
+    // if (this.getData() != null) return <View></View>;
+    // else
+    return (
+      <View style={styles.pageContainer}>
+        <View>
           <View>
-            <View>
-              <Carousel
-                ref={c => {
-                  this._carousel = c;
-                }}
-                data={this.state.imageCarousel}
-                renderItem={this._renderItem}
-                itemWidth={350}
-                sliderWidth={360}
-                onSnapToItem={index => this.carouselIndexChangeHandler(index)}
-              />
-            </View>
-            <Pagination
-              dotsLength={imageCarousel.length}
-              activeDotIndex={activeSlide}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 5,
-                backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            <Carousel
+              ref={c => {
+                this._carousel = c;
               }}
-              inactiveDotStyle={
-                {
-                  // Define styles for inactive dots here
-                }
-              }
-              inactiveDotOpacity={0.4}
-              inactiveDotScale={1}
+              data={this.state.imageCarousel}
+              renderItem={this._renderItem}
+              itemWidth={350}
+              sliderWidth={360}
+              onSnapToItem={index => this.carouselIndexChangeHandler(index)}
             />
           </View>
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() =>
-              this.props.navigation.navigate(navigationStrings.AuthPage)
-            }>
-            <Text style={styles.buttonTextStyle}>Get Started</Text>
-          </TouchableOpacity>
+          <Pagination
+            dotsLength={imageCarousel.length}
+            activeDotIndex={activeSlide}
+            dotStyle={{
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            }}
+            inactiveDotStyle={
+              {
+                // Define styles for inactive dots here
+              }
+            }
+            inactiveDotOpacity={0.4}
+            inactiveDotScale={1}
+          />
         </View>
-      );
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() =>
+            this.props.navigation.navigate(navigationStrings.AuthPage)
+          }>
+          <Text style={styles.buttonTextStyle}>Get Started</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 }
 

@@ -3,5 +3,7 @@ export {default as SignUp} from './SignUp/SignUp';
 export {default as LandingPage} from './LandingPage/LandingPage';
 export {default as AuthPage} from './AuthPage/AuthPage';
 export {default as Home} from './Home/Home';
+export {default as HomeTab} from './HomeTab/HomeTab';
+export {default as Profile} from './Profile/Profile';
+export {default as Cart} from './Cart/Cart';
 export {default as OtpVerification} from './OtpVerification/OtpVerification';
-

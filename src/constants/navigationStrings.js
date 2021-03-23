@@ -4,5 +4,8 @@ export default {
   LandingPage: 'LandingPage',
   AuthPage: 'AuthPage',
   Home: 'Home',
-  OtpVerification: 'OtpVerification'
+  HomeTab: 'HomeTab',
+  ProfileTab: 'ProfileTab',
+  Cart: 'Cart',
+  OtpVerification: 'OtpVerification',
 };
