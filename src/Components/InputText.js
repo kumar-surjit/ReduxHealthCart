@@ -10,6 +10,7 @@ export default function InputText(props) {
     type,
     secure,
     keyboardType,
+    maxLength
   } = props;
   return (
     <View style={containerStyle}>
@@ -20,6 +21,7 @@ export default function InputText(props) {
         onChangeText={value => props.changeState(type, value)}
         secureTextEntry={secure}
         keyboardType={keyboardType}
+        maxLength={maxLength}
       />
     </View>
   );

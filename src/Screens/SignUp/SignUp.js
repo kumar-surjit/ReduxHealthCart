@@ -14,12 +14,6 @@ import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
 import navigationStrings from '../../constants/navigationStrings';
 import {showMessage, hideMessage} from 'react-native-flash-message';
-import actionTypes from '../../redux/actionTypes';
-import {
-  StackActions,
-  NavigationActions,
-  CommonActions,
-} from '@react-navigation/native';
 import store from '../../redux/store';
 
 export default class SignUp extends Component {

@@ -7,6 +7,8 @@ import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
 import navigationStrings from '../../constants/navigationStrings';
 import {showMessage, hideMessage} from 'react-native-flash-message';
+import actions from '../../redux/actions';
+import WrapperContainer from '../../Components/WrapperContainer';
 
 export default class Login extends Component {
   state = {
@@ -14,25 +16,26 @@ export default class Login extends Component {
     password: '',
     number: undefined,
     isSecure: true,
+    isLoading: false,
   };
 
   changeState = (stateVar, newValue) => {
-    console.log('inside changeState', stateVar === 'name');
+    // console.log('inside changeState', stateVar === 'name');
     switch (stateVar) {
       case 'email':
-        console.log('this is newValue:', newValue);
+        // console.log('this is newValue:', newValue);
         this.setState({
           email: newValue,
         });
         break;
       case 'password':
-        console.log('this is newValue:', newValue);
+        // console.log('this is newValue:', newValue);
         this.setState({
           password: newValue,
         });
         break;
       case 'number':
-        console.log('this is newValue:', newValue);
+        // console.log('this is newValue:', newValue);
         this.setState({
           number: newValue,
         });
@@ -43,17 +46,32 @@ export default class Login extends Component {
   checkValidity = () => {
     const {email, password, number} = this.state;
     console.log(email, password, number);
-    // let data = {
-    //   email: email,
-    //   languageCode: 'EN',
-    //   signupType: 'APP',
-    //   password: password,
-    //   name: name,
-    // };
-    if (email != '' && password !== '' && number !== '') {
-      // this.signUpUser(data);
-      // this.props.navigation.navigate(navigationStrings.OtpVerification);
-      console.log('Valid');
+    let data = { "contactDetails": {
+      "phoneNo": number,
+      "countryCode": "+91",
+      "countryCodeISO": "IN"
+      }
+    };
+    console.log(number.length)
+    if (email != '' && password !== '' && number.length === 10) {
+      this.setState({isLoading: true});
+          // this.props.navigation.navigate(navigationStrings.OtpVerification, {userId: "some_user_id", data: data});
+          actions.logInOTP(data)
+        .then((res) => {
+          this.setState({isLoading: false});
+          // console.log(res);
+          this.props.navigation.navigate(navigationStrings.OtpVerification, {userId: res.data.userId, data: data});
+        })
+        .catch((err) => {
+          this.setState({isLoading: false});
+          showMessage({
+            message: "Couldn't login",
+            description: 'Please try again',
+            type: 'danger',
+          });
+          console.log(err);
+        })
+      console.log('Valid', data);
     } else {
       showMessage({
         message: 'Invalid Details',
@@ -65,8 +83,9 @@ export default class Login extends Component {
   };
 
   render() {
+    const {isLoading} = this.state;
     return (
-      <View style={{flex: 1}}>
+      <WrapperContainer isLoading={isLoading} style={{flex: 1}}>
         <View style={styles.headerStyle}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>Log In</Text>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
@@ -99,6 +118,7 @@ export default class Login extends Component {
               secure={false}
               changeState={this.changeState}
               keyboardType="numeric"
+              maxLength={10}
             />
             <View style={styles.helpTextStyle}>
               {/* <Text style={{color: '#929292'}}>Show Password</Text> */}
@@ -175,7 +195,7 @@ export default class Login extends Component {
             </View>
           </View>
         </View>
-      </View>
+      </WrapperContainer>
     );
   }
 }

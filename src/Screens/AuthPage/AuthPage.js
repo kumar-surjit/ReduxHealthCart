@@ -53,7 +53,7 @@ export default class AuthPage extends Component {
                 <Text style={styles.buttonText}>Log In</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={this.skipForNow}>
+            <TouchableOpacity>
               <Text
                 style={{
                   color: '#fff',

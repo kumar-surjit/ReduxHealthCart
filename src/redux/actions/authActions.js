@@ -1,5 +1,5 @@
 import {apiGet, apiPost, apiPut, apiDelete} from '../../utils/utils';
-import {LOGIN, SIGNUP} from '../../config/urls';
+import {LOGIN, SIGNUP, PHONELOGIN, VERIFYOTP} from '../../config/urls';
 import store from '../store';
 import actionTypes from '../actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,6 +36,35 @@ export function signUp(data) {
     //     reject(err);
     //   });
   });
+}
+
+export function logInOTP(data){
+  // console.log(data);
+  return new Promise((resolve, reject) => {
+      apiPost(PHONELOGIN, data).then((res) => {
+        resolve(res);
+  })
+  .catch((err) => {
+    reject(err);
+    console.log(err)
+  });
+  })
+}
+
+export function verififyOtp(data){
+  return new Promise((resolve, reject) => {
+    apiPost(VERIFYOTP, data)
+    .then((res) => {
+      console.log('Response: VerifyOTP ', res);
+      storeData(res);
+    dispatch({type: actionTypes.LOGGED_IN, payload: {isLoggedIn: true}});
+    resolve(res);
+    })
+    .catch((err) => {
+      reject(err);
+      console.log('Error: VerifyOTP ', err);
+    })
+  })
 }
 
 export function logout() {

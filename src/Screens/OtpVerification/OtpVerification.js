@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet, View, TouchableOpacity, Platform} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WrapperComponent from '../../Components/WrapperContainer';
+import actions from '../../redux/actions';
 
 import {
   CodeField,
@@ -9,6 +10,7 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
+import { showMessage } from 'react-native-flash-message';
 
 const styles = StyleSheet.create({
   title: {textAlign: 'center', fontSize: 30, fontWeight: 'bold'},
@@ -34,9 +36,10 @@ const styles = StyleSheet.create({
     borderColor: '#000',
   },
 });
-function App({navigation}) {
+function App({navigation, route}) {
   const CELL_COUNT = 5;
-
+  const [userId, setUserId] = useState(route.params.userId);
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
     timer: 100,
     otp: '',
@@ -59,6 +62,28 @@ function App({navigation}) {
 
   //RESTING THE TIMER AND REQUEST FOR NEW OTP
   const _onResend = () => {
+    setIsLoading(true);
+    actions.logInOTP(route.params.data)
+    .then((res) => {
+      setIsLoading(false);
+      updateState({otp: ''});
+      setUserId(res.data.userId);
+      showMessage({
+        message: "Resent OTP",
+        description: 'OTP has been resent successfully',
+        type: 'success',
+      });
+      // console.log(res);
+    })
+    .catch((err) => {
+      setIsLoading(false);
+      showMessage({
+        message: "Couldn't Resend OTP",
+        description: 'Please try again',
+        type: 'danger',
+      });
+      console.log(err);
+    });
     updateState({timer: 120});
   };
 
@@ -87,8 +112,57 @@ function App({navigation}) {
     s = s < 10 ? '0' + s : s;
     return `${m}:${s}`;
   }
+  // console.log(route.params);
+const sumbit = () => {
+  const {otp} = state;
+  if(otp.length === 5){
+    let data={ 
+      "userId": userId,
+      "otp" : otp,
+      "deviceToken" : "123",
+      "registerFrom": Platform.OS.toUpperCase(),
+      };
+      setIsLoading(true);
+      actions.verififyOtp(data)
+        .then((res) => {
+          setIsLoading(false);
+          showMessage({
+            message: "Welcome Back",
+            description: 'Successfully Logged In',
+            type: 'success',
+          });
+        })
+        .catch(err => {
+          setIsLoading(false);
+          if(err.status !== undefined){
+            if(err.status === 400){
+              showMessage({
+                message: err.message,
+                description: 'Please try again',
+                type: 'danger',
+              });
+            }
+          } else 
+          showMessage({
+            message: "Couldn't Verify OTP",
+            description: 'Please try again',
+            type: 'danger',
+          });
+        })
+  } else{
+    showMessage({
+      message: 'Incomplete Field',
+      description: 'Please enter the full OTP',
+      type: 'danger',
+    });
+  }
+  
+  // console.log(data);
+}
+
   return (
-    <WrapperComponent>
+    <WrapperComponent isLoading={isLoading}>
+      <View style={{paddingHorizontal: 16, flex: 1}}>
       <TouchableOpacity
         style={{flex: 0.1, marginTop: 16}}
         onPress={() => navigation.goBack()}>
@@ -98,7 +172,7 @@ function App({navigation}) {
         <Text style={styles.title}>Verify your{'\n'}Phone number</Text>
         <Text style={styles.subHeading}>Enter your OTP code here</Text>
       </View>
-      <View style={{flex: 0.2}}>
+      <View style={{flex: 0.3}}>
         <CodeField
           ref={ref}
           {...propsOtp}
@@ -124,7 +198,9 @@ function App({navigation}) {
           paddingVertical: 16,
           borderRadius: 16,
           marginBottom: 16,
-        }}>
+        }}
+        onPress={sumbit}
+        >
         <Text
           style={{
             color: '#fff',
@@ -162,6 +238,7 @@ function App({navigation}) {
           </Text>
         </View>
       )}
+      </View>
     </WrapperComponent>
   );
 }
