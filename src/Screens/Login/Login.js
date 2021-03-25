@@ -46,23 +46,28 @@ export default class Login extends Component {
   checkValidity = () => {
     const {email, password, number} = this.state;
     console.log(email, password, number);
-    let data = { "contactDetails": {
-      "phoneNo": number,
-      "countryCode": "+91",
-      "countryCodeISO": "IN"
-      }
+    let data = {
+      contactDetails: {
+        phoneNo: number,
+        countryCode: '+91',
+        countryCodeISO: 'IN',
+      },
     };
-    console.log(number.length)
+    console.log(number.length);
     if (email != '' && password !== '' && number.length === 10) {
       this.setState({isLoading: true});
-          // this.props.navigation.navigate(navigationStrings.OtpVerification, {userId: "some_user_id", data: data});
-          actions.logInOTP(data)
-        .then((res) => {
+      // this.props.navigation.navigate(navigationStrings.OtpVerification, {userId: "some_user_id", data: data});
+      actions
+        .logInOTP(data)
+        .then(res => {
           this.setState({isLoading: false});
           // console.log(res);
-          this.props.navigation.navigate(navigationStrings.OtpVerification, {userId: res.data.userId, data: data});
+          this.props.navigation.navigate(navigationStrings.OtpVerification, {
+            userId: res.data.userId,
+            data: data,
+          });
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState({isLoading: false});
           showMessage({
             message: "Couldn't login",
@@ -70,7 +75,7 @@ export default class Login extends Component {
             type: 'danger',
           });
           console.log(err);
-        })
+        });
       console.log('Valid', data);
     } else {
       showMessage({

@@ -104,6 +104,7 @@ const initialState = {
   ],
   cartCount: 0,
   cartItems: [],
+  profiles: [],
 };
 
 export default function (state = initialState, action) {
@@ -171,6 +172,14 @@ export default function (state = initialState, action) {
         ...state,
         cartItems: [],
         cartCount: 0,
+      };
+    }
+    case actionTypes.ADD_PROFILES: {
+      const {profiles} = action.payload;
+      // console.log(profiles);
+      return {
+        ...state,
+        profiles: [...state.profiles, ...profiles],
       };
     }
     default:

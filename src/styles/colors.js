@@ -32,4 +32,8 @@ export default {
   buyBgDark: '#282828',
   whiteOpacity77: 'rgba(255,255,255,0.77)',
   lightGreyBg: '#e8e8e8',
+  themeBg: '#1b1a36',
+  cardColor: '#31314b',
+  searchBarBg: '#31314b',
+  themeWhite: '#fff',
 };

@@ -16,11 +16,13 @@ export default class App extends Component {
   getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('userData');
-      console.log('inside getData', jsonValue);
+      // console.log('inside getData', jsonValue);
+      // console.log(jsonValue);
+      // alert(jsonValue);
       if (jsonValue != null)
         store.dispatch({
           type: actionTypes.LOGGED_IN,
-          payload: {isLoggedIn: true},
+          payload: {userData: jsonValue},
         });
       // console.log('got this value from Async Storage: ', jsonValue);
       return jsonValue != null ? JSON.parse(jsonValue) : null;

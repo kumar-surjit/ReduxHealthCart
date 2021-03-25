@@ -2,8 +2,7 @@ import actionTypes from '../actionTypes';
 import imagePath from '../../constants/imagePath';
 
 const initialState = {
-  userData: {},
-  isLoggedIn: false,
+  userData: null,
   otpUserId: '',
 };
 
@@ -18,19 +17,18 @@ export default function (state = initialState, action) {
       };
     }
     case actionTypes.LOGGED_IN: {
-      const {isLoggedIn} = action.payload;
+      const {userData} = action.payload;
       console.log('LOGGED IN REDUCER', action);
       return {
         ...state,
-        isLoggedIn: isLoggedIn,
+        userData: userData,
       };
     }
     case actionTypes.LOG_OUT: {
-      const {isLoggedIn} = action.payload;
       console.log('LOGGED OUT REDUCER', action);
       return {
         ...state,
-        isLoggedIn: isLoggedIn,
+        userData: null,
       };
     }
     default:

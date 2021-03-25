@@ -8,4 +8,5 @@ export default {
   ProfileTab: 'ProfileTab',
   Cart: 'Cart',
   OtpVerification: 'OtpVerification',
+  Profiles: 'Profiles',
 };

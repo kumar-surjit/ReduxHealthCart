@@ -9,12 +9,12 @@ import {useSelector} from 'react-redux';
 const Stack = createStackNavigator();
 
 export default function Routes() {
-  const isLoggedIn = useSelector(state => state.authReducer.isLoggedIn);
-  console.log('USE SELECTOR : ', isLoggedIn);
+  const userData = useSelector(state => state.authReducer.userData);
+  // console.log('USE SELECTOR : ', userData);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={navigationStrings.LandingPage}>
-        {isLoggedIn ? MainStack() : AuthStack()}
+        {userData !== null ? MainStack() : AuthStack()}
       </Stack.Navigator>
     </NavigationContainer>
   );

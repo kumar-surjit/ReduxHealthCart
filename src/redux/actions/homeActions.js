@@ -1,5 +1,9 @@
-import {dispatch} from '../store';
+import store from '../store';
 import actionTypes from '../actionTypes';
+import {apiPost} from '../../utils/utils';
+import {PROFILES} from '../../config/urls';
+
+const {dispatch} = store;
 
 export function addToCart(product) {
   console.log(product);

@@ -38,38 +38,38 @@ export function signUp(data) {
   });
 }
 
-export function logInOTP(data){
+export function logInOTP(data) {
   // console.log(data);
   return new Promise((resolve, reject) => {
-      apiPost(PHONELOGIN, data).then((res) => {
+    apiPost(PHONELOGIN, data)
+      .then(res => {
         resolve(res);
-  })
-  .catch((err) => {
-    reject(err);
-    console.log(err)
+      })
+      .catch(err => {
+        reject(err);
+        console.log(err);
+      });
   });
-  })
 }
 
-export function verififyOtp(data){
+export function verififyOtp(data) {
   return new Promise((resolve, reject) => {
     apiPost(VERIFYOTP, data)
-    .then((res) => {
-      console.log('Response: VerifyOTP ', res);
-      storeData(res);
-    dispatch({type: actionTypes.LOGGED_IN, payload: {isLoggedIn: true}});
-    resolve(res);
-    })
-    .catch((err) => {
-      reject(err);
-      console.log('Error: VerifyOTP ', err);
-    })
-  })
+      .then(res => {
+        console.log('Response: VerifyOTP ', res);
+        storeData(res);
+        dispatch({type: actionTypes.LOGGED_IN, payload: {isLoggedIn: true}});
+        resolve(res);
+      })
+      .catch(err => {
+        reject(err);
+        console.log('Error: VerifyOTP ', err);
+      });
+  });
 }
 
 export function logout() {
   dispatch({
     type: actionTypes.LOG_OUT,
-    payload: {isLoggedIn: false},
   });
 }

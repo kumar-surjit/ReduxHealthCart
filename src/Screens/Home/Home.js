@@ -1,9 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import navigationStrings from '../../constants/navigationStrings';
-import {HomeTab, Profile} from '../index';
+import {HomeTab, Profile, Profiles} from '../index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../styles/colors';
+import {Image} from 'react-native';
+import imagePath from '../../constants/imagePath';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,6 +38,20 @@ export default function Home() {
             />
           ),
           tabBarLabel: 'Profile',
+        }}
+      />
+      <Tab.Screen
+        name={navigationStrings.Profiles}
+        component={Profiles}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Image
+              source={imagePath.ic_home}
+              style={{width: 20, height: 20, resizeMode: 'contain'}}
+              tintColor={color}
+            />
+          ),
+          tabBarLabel: 'Profiles',
         }}
       />
     </Tab.Navigator>
