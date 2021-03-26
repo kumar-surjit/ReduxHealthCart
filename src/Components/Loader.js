@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Modal} from 'react-native';
 import {BarIndicator} from 'react-native-indicators';
+import colors from '../styles/colors';
 
 const LoadingComponent = () => (
   <View
@@ -15,7 +16,7 @@ const LoadingComponent = () => (
       backgroundColor: 'rgba(0,0,0,0.3)',
       elevation: 5,
     }}>
-    <BarIndicator size={25} color="#00C0BF" />
+    <BarIndicator size={25} color={colors.themeGreen} />
   </View>
 );
 const Loader = ({isLoading = false, withModal}) => {

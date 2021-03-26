@@ -22,21 +22,6 @@ export default function MainStack() {
           headerTitleStyle: {left: -18, fontSize: 17},
         }}
       />
-      {/* <Stack.Screen
-        name={navigationStrings.ProductDetails}
-        component={ProductDetails}
-        options={{headerShown: false}}
-      />
-      
-      <Stack.Screen
-        name={navigationStrings.OrderConfirm}
-        component={OrderConfirm}
-        options={{
-          headerShown: false,
-          title: 'Order Placed',
-          headerTitleStyle: {left: -18, fontSize: 17},
-        }}
-      /> */}
     </>
   );
 }

@@ -19,6 +19,8 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Actions from '../../redux/actions';
 import navigationStrings from '../../constants/navigationStrings';
 import {showMessage} from 'react-native-flash-message';
+import styles from './styles';
+import strings from '../../constants/lang';
 
 class HomeTab extends Component {
   state = {
@@ -76,45 +78,20 @@ class HomeTab extends Component {
   };
 
   renderProducts = ({item, index}) => (
-    <View
-      style={{
-        backgroundColor: '#fff',
-        marginRight: 8,
-        elevation: 4,
-        borderRadius: 8,
-        paddingVertical: 8,
-        paddingHorizontal: 8,
-        marginVertical: 8,
-        marginLeft: 4,
-        width: Dimensions.get('window').width / 2.4,
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingTop: 4,
-          paddingBottom: 8,
-        }}>
+    <View style={styles.productContainer}>
+      <View style={styles.productHeaderContainer}>
         <View style={{flexDirection: 'row'}}>
           <MaterialCommunityIcons name="flash" size={18} color="#FA8F06" />
           <Text style={{color: colors.themeBlue, fontSize: 12}}>
-            Flash Sale
+            {strings.FLASH_SALE}
           </Text>
         </View>
-        <Text style={{fontSize: 13}}>{item.stock} Left</Text>
+        <Text style={{fontSize: 13}}>
+          {item.stock} {strings.LEFT}
+        </Text>
       </View>
       <ImageBackground source={item.coverImg} style={{height: 150}}>
-        <Text
-          style={{
-            borderColor: 'red',
-            borderWidth: 1,
-            color: 'red',
-            alignSelf: 'flex-end',
-            padding: 2,
-            textAlign: 'center',
-          }}>
-          {item.discount}
-        </Text>
+        <Text style={styles.productDiscountContainer}>{item.discount}</Text>
         <View style={styles.ratingContianer}>
           <Text style={styles.ratingText}>{item.rating}</Text>
           <MaterialCommunityIcons
@@ -139,21 +116,19 @@ class HomeTab extends Component {
           </Text>
           <Text style={styles.originalPriceStyle}>₹{item.price}</Text>
         </View>
-        {/* {this.getQuantity(item.id)} */}
         {this.getQuantity(item.id) === 0 ? (
           <TouchableOpacity
             activeOpacity={1}
-            style={{
-              flexDirection: 'row',
-              backgroundColor: '#29646d',
-              borderRadius: 4,
-              paddingVertical: 4,
-              paddingHorizontal: 8,
-              alignItems: 'center',
-            }}
+            style={styles.addCartButton}
             onPress={() => this.props.addToCart(item)}>
-            <MaterialCommunityIcons name="plus" size={12} color="#fff" />
-            <Text style={{color: '#fff', fontSize: 12}}>Add</Text>
+            <MaterialCommunityIcons
+              name="plus"
+              size={12}
+              color={colors.white}
+            />
+            <Text style={{color: colors.white, fontSize: 12}}>
+              {strings.ADD}
+            </Text>
           </TouchableOpacity>
         ) : (
           <View style={{flexDirection: 'row'}}>
@@ -169,15 +144,9 @@ class HomeTab extends Component {
                 },
               ]}
               onPress={() => this.props.subtractQuantity(item.id)}>
-              <Text style={{color: '#fff'}}>-</Text>
+              <Text style={{color: colors.white}}>-</Text>
             </TouchableOpacity>
-            <Text
-              style={{
-                paddingHorizontal: 4,
-                borderWidth: 1,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-              }}>
+            <Text style={styles.productQuantityStyle}>
               {this.getQuantity(item.id)}
             </Text>
             <TouchableOpacity
@@ -192,7 +161,7 @@ class HomeTab extends Component {
                 },
               ]}
               onPress={() => this.props.addQuantity(item.id)}>
-              <Text style={{color: '#fff'}}>+</Text>
+              <Text style={{color: colors.white}}>+</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -214,21 +183,13 @@ class HomeTab extends Component {
                   size={30}
                 />
               </TouchableOpacity>
-              <Image
-                source={imagePath.logo}
-                style={{
-                  width: '55%',
-                  resizeMode: 'contain',
-                  height: 50,
-                  marginLeft: 8,
-                }}
-              />
+              <Image source={imagePath.logo} style={styles.logoImage} />
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
                 style={{
                   borderRadius: 20,
-                  backgroundColor: 'rgba(229, 255, 254, .4)',
+                  backgroundColor: colors.lightGreen,
                   padding: 4,
                 }}>
                 <MaterialCommunityIcons
@@ -244,17 +205,8 @@ class HomeTab extends Component {
                 }>
                 <MaterialCommunityIcons name="cart-outline" size={28} />
                 {this.props.cartCount > 0 && (
-                  <View
-                    style={{
-                      backgroundColor: '#265164',
-                      width: 16,
-                      borderRadius: 30,
-                      alignItems: 'center',
-                      position: 'absolute',
-                      right: 5,
-                      top: -6,
-                    }}>
-                    <Text style={{color: '#fff', fontSize: 12}}>
+                  <View style={styles.cartCountContainer}>
+                    <Text style={{color: colors.white, fontSize: 12}}>
                       {this.props.cartCount}
                     </Text>
                   </View>
@@ -279,10 +231,10 @@ class HomeTab extends Component {
                 width: 10,
                 height: 10,
                 borderRadius: 5,
-                backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                backgroundColor: colors.dotColor,
               }}
               inactiveDotStyle={{
-                backgroundColor: '#2f2f2e',
+                backgroundColor: colors.inactiveDotColor,
               }}
               inactiveDotOpacity={0.4}
               inactiveDotScale={1}
@@ -293,18 +245,13 @@ class HomeTab extends Component {
               }}
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 8,
-              paddingVertical: 8,
-              backgroundColor: '#ececec',
-            }}>
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>Flash Sale</Text>
+          <View style={styles.flashHeadingContainer}>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>
+              {strings.FLASH_SALE}
+            </Text>
             <TouchableOpacity style={styles.viewAllStyle}>
-              <Text style={{color: '#274B5D', fontWeight: 'bold'}}>
-                View all
+              <Text style={{color: colors.viewAllColor, fontWeight: 'bold'}}>
+                {strings.VIEW_ALL}
               </Text>
             </TouchableOpacity>
           </View>
@@ -337,88 +284,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeTab);
-
-const styles = StyleSheet.create({
-  container: {},
-  appBarContainer: {
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  appBarLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logoStyle: {
-    width: 25,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft: 10,
-  },
-  appBarText: {
-    fontSize: 14,
-    color: '#D2AA67',
-    fontWeight: 'bold',
-  },
-  appBarRight: {
-    flexDirection: 'row',
-  },
-  iconSpacing: {
-    marginRight: 16,
-  },
-  headingStyle: {
-    fontSize: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    fontFamily: 'LucyRounded-Bold',
-  },
-  coverImgStyle: {
-    height: 250,
-    resizeMode: 'contain',
-  },
-  ratingContianer: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    width: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    position: 'absolute',
-    bottom: 10,
-    left: 5,
-  },
-  ratingText: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginRight: 4,
-    fontSize: 12,
-  },
-  productNameContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  discountedPriceStyle: {
-    fontWeight: 'bold',
-    marginRight: 8,
-  },
-  originalPriceStyle: {
-    textDecorationLine: 'line-through',
-    color: '#919296',
-  },
-  discountStyle: {
-    color: colors.themeOrange,
-  },
-  productDetailStyle: {
-    paddingLeft: 10,
-    paddingTop: 5,
-    paddingBottom: 20,
-  },
-  viewAllStyle: {backgroundColor: '#fff', borderRadius: 4, padding: 8},
-  quantityOperationContainer: {
-    borderWidth: 1,
-    paddingHorizontal: 6,
-    backgroundColor: '#29646d',
-  },
-});

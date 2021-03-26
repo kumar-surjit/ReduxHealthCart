@@ -14,6 +14,7 @@ import actions from '../../redux/actions';
 import {connect} from 'react-redux';
 import navigationStrings from '../../constants/navigationStrings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import strings from '../../constants/lang';
 
 class Profile extends Component {
   state = {
@@ -137,7 +138,7 @@ class Profile extends Component {
               <MaterialCommunityIcons name="cart-outline" size={28} />
               {this.props.cartCount > 0 && (
                 <View style={styles.cartCountStyle}>
-                  <Text style={{color: '#fff', fontSize: 12}}>
+                  <Text style={{color: colors.white, fontSize: 12}}>
                     {this.props.cartCount}
                   </Text>
                 </View>
@@ -148,7 +149,7 @@ class Profile extends Component {
         <View style={styles.profileCardContainer}>
           <View
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: colors.white,
               elevation: 5,
               paddingVertical: 16,
               paddingHorizontal: 4,
@@ -165,7 +166,7 @@ class Profile extends Component {
                 style={{paddingHorizontal: 8, justifyContent: 'flex-start'}}>
                 <Text
                   style={{fontSize: 20, fontWeight: 'bold', marginBottom: 8}}>
-                  Surjit Kumar
+                  {strings.PROFILE_NAME}
                 </Text>
                 <View
                   style={{
@@ -178,7 +179,7 @@ class Profile extends Component {
                       size={20}
                       color={colors.themeGreen}
                     />
-                    <Text style={{fontSize: 13}}>9056167932</Text>
+                    <Text style={{fontSize: 13}}>{strings.PHONE_NO}</Text>
                   </View>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <MaterialCommunityIcons
@@ -186,7 +187,7 @@ class Profile extends Component {
                       size={20}
                       color={colors.themeGreen}
                     />
-                    <Text style={{fontSize: 13}}>surjit9464@gmail.com</Text>
+                    <Text style={{fontSize: 13}}>{strings.EMAIL}</Text>
                   </View>
                 </View>
               </View>
@@ -200,22 +201,22 @@ class Profile extends Component {
             fontSize: 20,
             paddingHorizontal: 8,
           }}>
-          Quick Links
+          {strings.QUICK_LINKS}
         </Text>
         <View style={styles.quickLinksBox}>
           <TouchableOpacity
             style={[
               styles.singleLinkBox,
-              {borderBottomWidth: 0.5, borderBottomColor: '#c5c5c5'},
+              {borderBottomWidth: 0.5, borderBottomColor: colors.ligh},
             ]}>
             <View style={styles.quickLinkImage}>
               <Image
                 source={imagePath.box}
                 style={{height: 22, width: 25, resizeMode: 'contain'}}
-                tintColor="#fff"
+                tintColor={colors.white}
               />
             </View>
-            <Text style={styles.quickLinkTextStyle}>My Orders</Text>
+            <Text style={styles.quickLinkTextStyle}>{strings.MY_ORDERS}</Text>
             <View style={{flex: 0.1}}>
               <MaterialCommunityIcons name="chevron-right" size={30} />
             </View>
@@ -229,10 +230,12 @@ class Profile extends Component {
               <Image
                 source={imagePath.calendar_blank}
                 style={{height: 22, width: 25, resizeMode: 'contain'}}
-                tintColor="#fff"
+                tintColor={strings.white}
               />
             </View>
-            <Text style={styles.quickLinkTextStyle}>My Appointments</Text>
+            <Text style={styles.quickLinkTextStyle}>
+              {strings.MY_APPOINTMENTS}
+            </Text>
             <View style={{flex: 0.1}}>
               <MaterialCommunityIcons name="chevron-right" size={30} />
             </View>
@@ -242,10 +245,10 @@ class Profile extends Component {
               <Image
                 source={imagePath.bell}
                 style={{height: 22, width: 25, resizeMode: 'contain'}}
-                tintColor="#fff"
+                tintColor={colors.white}
               />
             </View>
-            <Text style={styles.quickLinkTextStyle}>Reminders</Text>
+            <Text style={styles.quickLinkTextStyle}>{strings.REMINDERS}</Text>
             <View style={{flex: 0.1}}>
               <MaterialCommunityIcons name="chevron-right" size={30} />
             </View>
@@ -255,11 +258,11 @@ class Profile extends Component {
               <Image
                 source={imagePath.logout}
                 style={{height: 22, width: 25, resizeMode: 'contain'}}
-                tintColor="#fff"
+                tintColor={colors.white}
               />
             </View>
             <Text style={styles.quickLinkTextStyle} onPress={this.logOut}>
-              Log Out
+              {strings.LOG_OUT}
             </Text>
             <View style={{flex: 0.1}}>
               <MaterialCommunityIcons name="chevron-right" size={30} />

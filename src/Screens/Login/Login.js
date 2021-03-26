@@ -9,6 +9,7 @@ import navigationStrings from '../../constants/navigationStrings';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 import actions from '../../redux/actions';
 import WrapperContainer from '../../Components/WrapperContainer';
+import strings from '../../constants/lang';
 
 export default class Login extends Component {
   state = {
@@ -97,18 +98,18 @@ export default class Login extends Component {
             <MaterialCommunityIcons name="close" size={25} />
           </TouchableOpacity>
         </View>
-        <View style={{backgroundColor: '#b8b8b8', height: 1.5}} />
+        <View style={{backgroundColor: colors.anotherLightGray, height: 1.5}} />
         <View style={styles.contentContainer}>
           <View style={{marginVertical: 15}}>
             <InputText
-              placeholder="Enter Email"
+              placeholder={strings.ENTER_EMAIL}
               style={styles.inputTextStyle}
               focus={false}
               type="email"
               changeState={this.changeState}
             />
             <InputText
-              placeholder="Enter Password"
+              placeholder={strings.ENTER_PASSWORD}
               style={[styles.inputTextStyle, {marginTop: 16}]}
               focus={false}
               type="password"
@@ -116,7 +117,7 @@ export default class Login extends Component {
               changeState={this.changeState}
             />
             <InputText
-              placeholder="Enter Phone no"
+              placeholder={strings.ENTER_PHONE}
               style={[styles.inputTextStyle, {marginTop: 16}]}
               focus={false}
               type="number"
@@ -128,7 +129,7 @@ export default class Login extends Component {
             <View style={styles.helpTextStyle}>
               {/* <Text style={{color: '#929292'}}>Show Password</Text> */}
               <TouchableOpacity>
-                <Text style={{color: '#929292'}}>Forgot Password?</Text>
+                <Text style={{color: colors.otherGray}}>Forgot Password?</Text>
               </TouchableOpacity>
             </View>
             <AuthButton
@@ -148,7 +149,7 @@ export default class Login extends Component {
               <Text
                 style={{
                   fontSize: 18,
-                  color: '#929292',
+                  color: colors.otherGray,
                   fontWeight: 'bold',
                   marginHorizontal: 4,
                 }}>
@@ -161,21 +162,24 @@ export default class Login extends Component {
                 style={[
                   styles.oAuthButtonStyle,
                   {
-                    borderColor: '#2D4690',
+                    borderColor: colors.darkBlue,
                     marginRight: 12,
                   },
                 ]}>
                 <OAuthButton
                   iconName="facebook"
-                  color="#2D4690"
+                  color={colors.darkBlue}
                   label="Facebook"
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.oAuthButtonStyle, {borderColor: '#E53138'}]}>
+                style={[
+                  styles.oAuthButtonStyle,
+                  {borderColor: colors.darkRed},
+                ]}>
                 <OAuthButton
                   iconName="google-plus"
-                  color="#E53138"
+                  color={colors.darkRed}
                   label="Google"
                 />
               </TouchableOpacity>
@@ -187,14 +191,14 @@ export default class Login extends Component {
                 justifyContent: 'center',
               }}>
               <Text style={{fontSize: 16, textAlign: 'center'}}>
-                New to HealthKart?{' '}
+                {strings.NEW_TO_HEALTHKART}{' '}
               </Text>
               <TouchableOpacity
                 onPress={() =>
                   this.props.navigation.navigate(navigationStrings.SignUp)
                 }>
                 <Text style={{color: colors.themeGreen, fontSize: 16}}>
-                  Sign Up
+                  {strings.SIGN_UP}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -211,7 +215,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 15,
     paddingVertical: 15,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   inputTextStyle: {
     borderColor: colors.themeGreen,
@@ -239,13 +243,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   buttonTextStyle: {
-    color: '#fff',
+    color: colors.white,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
   },
   lineStyle: {
-    backgroundColor: '#929292',
+    backgroundColor: colors.otherGray,
     height: 1,
     flex: 0.4,
   },

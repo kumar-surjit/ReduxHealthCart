@@ -14,7 +14,8 @@ import actions from '../../redux/actions';
 import WrapperContainer from '../../Components/WrapperContainer';
 import styles from './styles';
 import navigationStrings from '../../constants/navigationStrings';
-import {StackActions} from '@react-navigation/native';
+import colors from '../../styles/colors';
+import strings from '../../constants/lang';
 
 const LIMIT = '10';
 
@@ -72,13 +73,13 @@ class Profiles extends Component {
         style={{height: 130}}
       />
       <View style={styles.itemTextContainer}>
-        <Text style={{color: 'black', opacity: 0.8, fontWeight: 'bold'}}>
+        <Text style={{color: colors.blackOpacity80, fontWeight: 'bold'}}>
           {item.firstName}
         </Text>
-        <Text style={{color: 'black', opacity: 0.7}}>
+        <Text style={{color: colors.blackOpacity70}}>
           Gender, {this.getAge(item.dob.fullDate)}
         </Text>
-        <Text style={{color: 'black', opacity: 0.7}}>
+        <Text style={{color: colors.blackOpacity70}}>
           {item.addressDetails.city}
         </Text>
       </View>
@@ -95,27 +96,25 @@ class Profiles extends Component {
           <TouchableOpacity
             style={{flex: 0.2, flexDirection: 'row', alignItems: 'center'}}
             onPress={() =>
-              this.props.navigation.dispatch(
-                StackActions.replace(navigationStrings.HomeTab),
-              )
+              this.props.navigation.navigate(navigationStrings.HomeTab)
             }>
             <MaterialCommunityIcons
               name="chevron-left"
               size={30}
-              color="#fff"
+              color={colors.themeWhite}
             />
-            <Text style={styles.headerTextStyle}>Back</Text>
+            <Text style={styles.headerTextStyle}>{strings.BACK}</Text>
           </TouchableOpacity>
           <TextInput
-            placeholder="Search"
+            placeholder={strings.SEARCH}
             style={styles.searchBoxStyle}
-            placeholderTextColor="#fff"
+            placeholderTextColor={colors.themeWhite}
           />
           <TouchableOpacity style={{flex: 0.1}}>
             <MaterialCommunityIcons
               name="filter-outline"
               size={30}
-              color="#fff"
+              color={colors.themeWhite}
             />
           </TouchableOpacity>
         </View>

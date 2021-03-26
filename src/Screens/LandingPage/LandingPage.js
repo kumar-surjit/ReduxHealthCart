@@ -5,12 +5,10 @@ import imagePath from '../../constants/imagePath';
 import navigationStrings from '../../constants/navigationStrings';
 import colors from '../../styles/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {StackActions} from '@react-navigation/native';
 
 export default class LandingPage extends Component {
   constructor(props) {
     super(props);
-    // this.getData();
   }
   state = {
     imageCarousel: [
@@ -34,15 +32,6 @@ export default class LandingPage extends Component {
     activeSlide: 0,
   };
 
-  removeData = async () => {
-    try {
-      await AsyncStorage.removeItem('userData');
-      console.log('successfully deleted data from Async Storage');
-    } catch (error) {
-      console.log('could not delete data from Async Storage ', error);
-    }
-  };
-
   _renderItem = ({item, index}) => {
     return (
       <View style={{justifyContent: 'center'}}>
@@ -55,7 +44,7 @@ export default class LandingPage extends Component {
             alignSelf: 'center',
           }}
         />
-        <Text style={{textAlign: 'center', fontSize: 30, color: '#fff'}}>
+        <Text style={{textAlign: 'center', fontSize: 30, color: colors.white}}>
           {item.label_first}
           {'\n'}
           {item.label_second}
@@ -88,10 +77,7 @@ export default class LandingPage extends Component {
   };
 
   render() {
-    // this.removeData();
     const {imageCarousel, activeSlide} = this.state;
-    // if (this.getData() != null) return <View></View>;
-    // else
     return (
       <View style={styles.pageContainer}>
         <View>
@@ -110,12 +96,7 @@ export default class LandingPage extends Component {
           <Pagination
             dotsLength={imageCarousel.length}
             activeDotIndex={activeSlide}
-            dotStyle={{
-              width: 10,
-              height: 10,
-              borderRadius: 5,
-              backgroundColor: 'rgba(255, 255, 255, 0.92)',
-            }}
+            dotStyle={styles.dotStyle}
             inactiveDotStyle={
               {
                 // Define styles for inactive dots here
@@ -130,7 +111,7 @@ export default class LandingPage extends Component {
           onPress={() =>
             this.props.navigation.navigate(navigationStrings.AuthPage)
           }>
-          <Text style={styles.buttonTextStyle}>Get Started</Text>
+          <Text style={styles.buttonTextStyle}></Text>
         </TouchableOpacity>
       </View>
     );
@@ -143,9 +124,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.landingPageGreen,
     justifyContent: 'center',
   },
+  dotStyle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+  },
   buttonContainer: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     marginHorizontal: 20,
     borderRadius: 10,
     paddingVertical: 15,

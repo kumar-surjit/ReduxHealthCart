@@ -8,7 +8,7 @@ export default StyleSheet.create({
     paddingVertical: 8,
   },
   headerTextStyle: {
-    color: '#fff',
+    color: colors.themeWhite,
     fontSize: 16,
     fontFamily: 'Nunito-SemiBold',
   },
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     elevation: 8,
   },
   itemTextContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.themeWhite,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingHorizontal: 16,
@@ -30,7 +30,7 @@ export default StyleSheet.create({
   searchBoxStyle: {
     flex: 0.7,
     textAlign: 'center',
-    color: '#fff',
+    color: colors.themeWhite,
     fontFamily: 'Nunito-Bold',
     fontSize: 20,
   },

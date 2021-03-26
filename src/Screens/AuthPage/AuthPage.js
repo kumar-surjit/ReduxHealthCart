@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import navigationStrings from '../../constants/navigationStrings';
+import colors from '../../styles/colors';
 
 export default class AuthPage extends Component {
   skipForNow = () => {
@@ -30,11 +32,11 @@ export default class AuthPage extends Component {
             <View style={{marginHorizontal: 50}}>
               <Image
                 source={imagePath.logo}
-                tintColor="#fff"
+                tintColor={colors.white}
                 style={styles.logoStyle}
               />
             </View>
-            <Text style={styles.logoText}>Kick start your fitness journey</Text>
+            <Text style={styles.logoText}>{strings.KICK_START_JOURNEY}</Text>
           </View>
           <View style={{flex: 0.5, justifyContent: 'center'}}>
             <View style={{flexDirection: 'row'}}>
@@ -43,25 +45,25 @@ export default class AuthPage extends Component {
                 onPress={() =>
                   this.props.navigation.navigate(navigationStrings.SignUp)
                 }>
-                <Text style={styles.buttonText}>Sign Up</Text>
+                <Text style={styles.buttonText}>{strings.SIGN_UP}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() =>
                   this.props.navigation.navigate(navigationStrings.Login)
                 }>
-                <Text style={styles.buttonText}>Log In</Text>
+                <Text style={styles.buttonText}>{strings.LOG_IN}</Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity>
               <Text
                 style={{
-                  color: '#fff',
+                  color: colors.white,
                   fontSize: 18,
                   textAlign: 'center',
                   marginTop: 64,
                 }}>
-                Skip for now
+                {strings.SKIP_FOR_NOW}
               </Text>
             </TouchableOpacity>
           </View>
@@ -79,12 +81,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 8,
     flex: 0.5,
     marginHorizontal: 20,
     paddingVertical: 15,
   },
-  logoText: {color: '#fff', textAlign: 'center', fontSize: 15},
+  logoText: {color: colors.white, textAlign: 'center', fontSize: 15},
   buttonText: {textAlign: 'center', fontSize: 16},
 });

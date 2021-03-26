@@ -13,6 +13,7 @@ import imagePath from '../../constants/imagePath';
 import colors from '../../styles/colors';
 import navigationStrings from '../../constants/navigationStrings';
 import {showMessage} from 'react-native-flash-message';
+import strings from '../../constants/lang';
 
 class Cart extends Component {
   _renderItem = ({item, index}) => (
@@ -43,7 +44,7 @@ class Cart extends Component {
             <Text
               style={{
                 borderRadius: 4,
-                borderColor: 'gray',
+                borderColor: colors.gray,
                 borderWidth: 1,
                 paddingHorizontal: 16,
                 marginHorizontal: 8,
@@ -82,13 +83,15 @@ class Cart extends Component {
         <TouchableOpacity
           style={styles.buttonContainerLeft}
           onPress={() => this.props.removeItemFromCart(item.id)}>
-          <Text style={styles.buttonLeftStyle}>REMOVE</Text>
+          <Text style={styles.buttonLeftStyle}>{strings.REMOVE}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
             flex: 0.6,
           }}>
-          <Text style={styles.buttonRightStyle}>MOVE TO WISHLIST</Text>
+          <Text style={styles.buttonRightStyle}>
+            {strings.MOVE_TO_WISHLIST}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -149,7 +152,7 @@ class Cart extends Component {
           <Text style={{fontWeight: 'bold', marginTop: 8, fontSize: 20}}>
             Hey, it feels so light!
           </Text>
-          <Text style={{color: '#999BA3', marginTop: 8}}>
+          <Text style={{color: colors.cartTextEmpty, marginTop: 8}}>
             There is nothing in your bag. Let's add some items.
           </Text>
         </View>
@@ -158,7 +161,7 @@ class Cart extends Component {
       return (
         <View
           style={{
-            backgroundColor: '#dfdfe2',
+            backgroundColor: colors.cartBg,
             flex: 1,
             paddingTop: 16,
           }}>
@@ -170,33 +173,33 @@ class Cart extends Component {
           />
           <View
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: colors.white,
               paddingVertical: 12,
               paddingHorizontal: 16,
             }}>
             <Text
               style={{
                 fontWeight: 'bold',
-                borderBottomColor: 'gray',
+                borderBottomColor: colors.gray,
                 borderBottomWidth: 1,
                 paddingBottom: 5,
               }}>
-              PRICE DETAILS
+              {strings.PRICE_DETAILS}
             </Text>
             <View style={styles.priceDetailsStyle}>
-              <Text>Total MRP</Text>
+              <Text>{strings.TOTAL_MRP}</Text>
               <Text>₹{this.getMRP()}</Text>
             </View>
             <View
               style={[
                 styles.priceDetailsStyle,
-                {borderBottomWidth: 1, borderBottomColor: 'gray'},
+                {borderBottomWidth: 1, borderBottomColor: colors.gray},
               ]}>
-              <Text>Total Discount</Text>
+              <Text>{strings.TOTAL_DISCOUNT}</Text>
               <Text>₹{this.getDiscount()}</Text>
             </View>
             <View style={styles.priceDetailsStyle}>
-              <Text style={{fontWeight: 'bold'}}>Total Amount</Text>
+              <Text style={{fontWeight: 'bold'}}>{strings.TOTAL_AMOUNT}</Text>
               <Text style={{fontWeight: 'bold'}}>₹{this.getTotal()}</Text>
             </View>
             <View style={{marginTop: 4}}>
@@ -210,11 +213,11 @@ class Cart extends Component {
                 onPress={this.placeOrder}>
                 <Text
                   style={{
-                    color: '#fff',
+                    color: colors.white,
                     textAlign: 'center',
                     fontWeight: 'bold',
                   }}>
-                  PLACE ORDER
+                  {strings.PLACE_ORDER}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -246,7 +249,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 const styles = StyleSheet.create({
   itemContainer: {
     borderRadius: 4,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     marginBottom: 8,
   },
   productDetailsContainer: {
@@ -254,25 +257,25 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     marginHorizontal: 12,
     borderBottomWidth: 1.5,
-    borderBottomColor: '#D4D5D9',
+    borderBottomColor: colors.lightestGray,
   },
   discountedPriceStyle: {
     fontWeight: 'bold',
   },
   originalPriceStyle: {
     textDecorationLine: 'line-through',
-    color: '#919296',
+    color: colors.grayish,
   },
   discountStyle: {
-    color: 'red',
+    color: colors.red,
   },
   buttonContainerLeft: {
     flex: 0.4,
     borderRightWidth: 1.5,
-    borderRightColor: '#D4D5D9',
+    borderRightColor: colors.lightestGray,
   },
   buttonLeftStyle: {
-    color: '#696B79',
+    color: colors.darkGray,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -288,7 +291,7 @@ const styles = StyleSheet.create({
   },
   quantityOperationStyle: {
     borderRadius: 40,
-    borderColor: 'gray',
+    borderColor: colors.gray,
     borderWidth: 1,
     height: 26,
   },
