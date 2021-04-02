@@ -3,10 +3,11 @@ export default {
   SignUp: 'SignUp',
   LandingPage: 'LandingPage',
   AuthPage: 'AuthPage',
-  Home: 'Home',
+  TabRoutes: 'TabRoutes',
   HomeTab: 'HomeTab',
   ProfileTab: 'ProfileTab',
   Cart: 'Cart',
   OtpVerification: 'OtpVerification',
   Profiles: 'Profiles',
+  SearchProfiles: 'SearchProfiles',
 };

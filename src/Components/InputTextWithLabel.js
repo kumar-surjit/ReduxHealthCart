@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, View} from 'react-native';
 
-export default function InputText(props) {
+export default function InputTextWithLabel(props) {
   const {
     placeholder,
     style,
@@ -10,7 +10,7 @@ export default function InputText(props) {
     type,
     secure,
     keyboardType,
-    maxLength
+    maxLength,
   } = props;
   return (
     <View style={containerStyle}>

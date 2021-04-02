@@ -7,6 +7,7 @@ export default {
   PHONE_NO: '9056167932',
   EMAIL: 'surjit9464@gmail.com',
   QUICK_LINKS: 'Quick Links',
+  CHANGE_THEME: 'Change Theme',
   MY_ORDERS: 'My Orders',
   MY_APPOINTMENTS: 'My Appointments',
   REMINDERS: 'Reminders',

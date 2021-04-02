@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import imagePath from '../../constants/imagePath';
 import navigationStrings from '../../constants/navigationStrings';
 import colors from '../../styles/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import strings from '../../constants/lang';
 
+const {width} = Dimensions.get('window');
 export default class LandingPage extends Component {
   constructor(props) {
     super(props);
@@ -86,10 +95,13 @@ export default class LandingPage extends Component {
               ref={c => {
                 this._carousel = c;
               }}
+              pagingEnabled
+              inactiveSlideOpacity={1}
+              inactiveSlideScale={1}
               data={this.state.imageCarousel}
               renderItem={this._renderItem}
-              itemWidth={350}
-              sliderWidth={360}
+              itemWidth={width}
+              sliderWidth={width}
               onSnapToItem={index => this.carouselIndexChangeHandler(index)}
             />
           </View>
@@ -111,7 +123,7 @@ export default class LandingPage extends Component {
           onPress={() =>
             this.props.navigation.navigate(navigationStrings.AuthPage)
           }>
-          <Text style={styles.buttonTextStyle}></Text>
+          <Text style={styles.buttonTextStyle}>{strings.GET_STARTED}</Text>
         </TouchableOpacity>
       </View>
     );

@@ -5,3 +5,4 @@ export const SIGNUP = getUrl('/user/registerUser');
 export const PHONELOGIN = 'https://api.talktier.com/user/v1/loginSignupOtp';
 export const VERIFYOTP = 'https://api.talktier.com/user/v1/verifyOtp';
 export const PROFILES = 'https://api.talktier.com/user/v1/getUserSearch';
+export const SEARCHPROFILE = 'https://api.talktier.com/user/v1/getUserNearMe';

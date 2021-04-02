@@ -8,17 +8,20 @@ import {
   Modal,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import colors from '../../styles/colors';
+import {getColors} from '../../styles/colors';
 import imagePath from '../../constants/imagePath';
 import actions from '../../redux/actions';
 import {connect} from 'react-redux';
 import navigationStrings from '../../constants/navigationStrings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import strings from '../../constants/lang';
+import ThemeCard from '../../Components/ThemeCard';
+import {getStyleSheet} from './styles';
 
 class Profile extends Component {
   state = {
     modalVisible: false,
+    cardColors: ['Green', 'Blue'],
   };
 
   setModalVisible = () => {
@@ -73,13 +76,19 @@ class Profile extends Component {
     }
   };
 
+  changeTheme = (newVal, id) => {
+    actions.changeTheme(newVal, id);
+  };
+
   logOut = () => {
     this.removeData();
     actions.logout();
   };
 
   render() {
-    const {modalVisible} = this.state;
+    const {modalVisible, cardColors} = this.state;
+    const styles = getStyleSheet(this.props.themeColor);
+    const colors = getColors(this.props.themeColor);
     return (
       <View style={{paddingHorizontal: 8}}>
         <Modal
@@ -111,7 +120,7 @@ class Profile extends Component {
             <TouchableOpacity>
               <MaterialCommunityIcons
                 name="menu"
-                color={colors.themeDarkGreen}
+                color={colors.themeGreen}
                 size={30}
               />
             </TouchableOpacity>
@@ -126,7 +135,7 @@ class Profile extends Component {
               }}>
               <MaterialCommunityIcons
                 name="message-outline"
-                color={colors.themeDarkGreen}
+                color={colors.themeGreen}
                 size={20}
               />
             </TouchableOpacity>
@@ -201,13 +210,35 @@ class Profile extends Component {
             fontSize: 20,
             paddingHorizontal: 8,
           }}>
+          {strings.CHANGE_THEME}
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            marginVertical: 16,
+          }}>
+          {cardColors.map((item, index) => {
+            // console.log(index)
+            return (
+              <ThemeCard label={item} id={index} onPress={this.changeTheme} />
+            );
+          })}
+        </View>
+        <Text
+          style={{
+            color: '#909BB0',
+            fontWeight: 'bold',
+            fontSize: 20,
+            paddingHorizontal: 8,
+          }}>
           {strings.QUICK_LINKS}
         </Text>
         <View style={styles.quickLinksBox}>
           <TouchableOpacity
             style={[
               styles.singleLinkBox,
-              {borderBottomWidth: 0.5, borderBottomColor: colors.ligh},
+              {borderBottomWidth: 0.5, borderBottomColor: '#c5c5c5'},
             ]}>
             <View style={styles.quickLinkImage}>
               <Image
@@ -230,7 +261,7 @@ class Profile extends Component {
               <Image
                 source={imagePath.calendar_blank}
                 style={{height: 22, width: 25, resizeMode: 'contain'}}
-                tintColor={strings.white}
+                tintColor={colors.white}
               />
             </View>
             <Text style={styles.quickLinkTextStyle}>
@@ -240,7 +271,11 @@ class Profile extends Component {
               <MaterialCommunityIcons name="chevron-right" size={30} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.singleLinkBox}>
+          <TouchableOpacity
+            style={[
+              styles.singleLinkBox,
+              {borderBottomWidth: 0.5, borderBottomColor: '#c5c5c5'},
+            ]}>
             <View style={styles.quickLinkImage}>
               <Image
                 source={imagePath.bell}
@@ -280,6 +315,7 @@ const mapStateToProps = (state, ownProps) => {
     carouselImage: state.homeReducer.carouselImage,
     cartCount: state.homeReducer.cartCount,
     cartItems: state.homeReducer.cartItems,
+    themeColor: state.homeReducer.themeColor,
   };
 };
 
@@ -289,59 +325,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
-
-const styles = StyleSheet.create({
-  appBarContainer: {
-    paddingVertical: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  logoStyle: {
-    width: '55%',
-    resizeMode: 'contain',
-    height: 50,
-    marginLeft: 8,
-  },
-  cartCountStyle: {
-    backgroundColor: '#265164',
-    width: 16,
-    borderRadius: 30,
-    alignItems: 'center',
-    position: 'absolute',
-    right: 5,
-    top: -6,
-  },
-  profileCardContainer: {
-    paddingHorizontal: 8,
-    paddingVertical: 20,
-    backgroundColor: '#F5F6F8',
-  },
-  quickLinksBox: {
-    backgroundColor: '#fff',
-    paddingVertical: 4,
-    elevation: 5,
-    borderRadius: 8,
-    marginHorizontal: 8,
-    marginVertical: 16,
-  },
-  singleLinkBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 16,
-    paddingVertical: 12,
-  },
-  quickLinkImage: {
-    backgroundColor: colors.themeDarkGreen,
-    padding: 6,
-    paddingLeft: 8,
-    paddingRight: 4,
-    borderRadius: 8,
-    flex: 0.1,
-  },
-  quickLinkTextStyle: {
-    flex: 0.8,
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingLeft: 16,
-  },
-});

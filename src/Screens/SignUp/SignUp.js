@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import actions from '../../redux/actions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../styles/colors';
-import InputText from '../../Components/InputText';
+import InputTextWithLabel from '../../Components/InputTextWithLabel';
 import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
 import navigationStrings from '../../constants/navigationStrings';
@@ -95,7 +89,7 @@ export default class SignUp extends Component {
             Your number is safe with us. We won't share your details with
             anyone.
           </Text>
-          <InputText
+          <InputTextWithLabel
             placeholder="Enter Name"
             style={styles.inputTextStyle}
             containerStyle={styles.inputContainerStyle}
@@ -103,14 +97,14 @@ export default class SignUp extends Component {
             type="name"
             changeState={this.changeState}
           />
-          <InputText
+          <InputTextWithLabel
             placeholder="Enter Email"
             style={[styles.inputTextStyle, {marginTop: 16}]}
             focus={false}
             type="email"
             changeState={this.changeState}
           />
-          <InputText
+          <InputTextWithLabel
             placeholder="Enter Password"
             style={[styles.inputTextStyle, {marginTop: 16}]}
             focus={false}

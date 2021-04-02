@@ -1,15 +1,15 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import navigationStrings from '../../constants/navigationStrings';
-import {HomeTab, Profile, Profiles} from '../index';
+import navigationStrings from '../constants/navigationStrings';
+import {HomeTab, Profile, Profiles} from '../Screens';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import colors from '../../styles/colors';
+import colors from '../styles/colors';
 import {Image} from 'react-native';
-import imagePath from '../../constants/imagePath';
+import imagePath from '../constants/imagePath';
 
 const Tab = createBottomTabNavigator();
 
-export default function Home() {
+export default function TabRoutes() {
   return (
     <Tab.Navigator
       tabBarOptions={{

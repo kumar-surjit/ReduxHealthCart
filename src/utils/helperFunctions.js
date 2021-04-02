@@ -19,7 +19,7 @@ import {Linking, Platform, PermissionsAndroid} from 'react-native';
 //     );
 //   });
 
-const showError = (message) => {
+const showError = message => {
   showMessage({
     type: 'danger',
     icon: 'danger',
@@ -27,7 +27,7 @@ const showError = (message) => {
   });
 };
 
-const showSuccess = (message) => {
+const showSuccess = message => {
   showMessage({
     type: 'success',
     icon: 'success',
@@ -81,6 +81,13 @@ The first six values (the red, green, and blue ones) stay the exact same. The on
     case '70':
       return `#${color}B3`;
   }
+}
+
+export function getAge(dob) {
+  let now = new Date();
+  let date = new Date(dob);
+  const age = now.getFullYear() - date.getFullYear();
+  return age;
 }
 
 export {showError, showSuccess};

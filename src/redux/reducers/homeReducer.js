@@ -105,6 +105,8 @@ const initialState = {
   cartCount: 0,
   cartItems: [],
   profiles: [],
+  themeColor: '#34B4AC',
+  selectedIndex: 0,
 };
 
 export default function (state = initialState, action) {
@@ -182,6 +184,18 @@ export default function (state = initialState, action) {
         profiles: [...state.profiles, ...profiles],
       };
     }
+    case actionTypes.CHANGE_TO_RED:
+      return {
+        ...state,
+        themeColor: '#00C0BF',
+        selectedIndex: action.payload,
+      };
+    case actionTypes.CHANGE_TO_BLUE:
+      return {
+        ...state,
+        themeColor: '#347cb4',
+        selectedIndex: action.payload,
+      };
     default:
       return {
         ...state,

@@ -42,3 +42,9 @@ export function placeOrder() {
     type: actionTypes.PLACE_ORDER,
   };
 }
+
+export function changeTheme(newVal, id) {
+  if (newVal === 'green')
+    dispatch({type: actionTypes.CHANGE_TO_RED, payload: id});
+  else dispatch({type: actionTypes.CHANGE_TO_BLUE, payload: id});
+}

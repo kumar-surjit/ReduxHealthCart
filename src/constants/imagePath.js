@@ -20,6 +20,7 @@ export default {
   ic_messenger: require('../assets/images/messenger.png'),
   ic_user: require('../assets/images/user.png'),
   ic_filter: require('../assets/images/filter.png'),
+  ic_selected: require('../assets/images/checkmark.png'),
   box: require('../assets/images/box.png'),
   logout: require('../assets/images/logout.png'),
   calendar_blank: require('../assets/images/calendar-blank.png'),

@@ -5,6 +5,7 @@ import {
   Image,
   TextInput,
   FlatList,
+  RefreshControl,
   TouchableOpacity,
 } from 'react-native';
 import imagePath from '../../constants/imagePath';
@@ -12,84 +13,157 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {connect} from 'react-redux';
 import actions from '../../redux/actions';
 import WrapperContainer from '../../Components/WrapperContainer';
-import styles from './styles';
+import {getStyleSheet} from './styles';
 import navigationStrings from '../../constants/navigationStrings';
-import colors from '../../styles/colors';
+import {getColors} from '../../styles/colors';
 import strings from '../../constants/lang';
+import {MaterialIndicator} from 'react-native-indicators';
+import colors from '../../styles/colors';
+import Card from '../../Components/Card';
+import {getAge} from '../../utils/helperFunctions';
 
 const LIMIT = '10';
 
 class Profiles extends Component {
   state = {
     skip: 0,
-    isLoading: false,
+    isLoading: true,
     profiles: [],
     isListEnd: false,
+    isLoadingMore: false,
+    isNoMoreData: false,
+    refreshing: false,
   };
 
   componentDidMount = () => {
     this.getData();
   };
 
-  getData = () => {
+  getData = (onEndReachCall = false) => {
     const {skip, profiles, isListEnd} = this.state;
-    if (!isListEnd) {
-      this.setState({isLoading: true});
-      let calcSkip = skip + profiles.length;
-      let data = {
-        searchType: 'LEADERBOARD',
-        limit: LIMIT,
-        skip: calcSkip.toString(),
-      };
-      console.log(data);
-      // console.log(header);
-      actions
-        .getProfiles(data)
-        .then(res => {
-          // console.log('this is the response: ', res);
-          if (res.data.length > 0) {
-            let profilesData = [...profiles, ...res.data];
-            this.setState({profiles: profilesData, isLoading: false});
-          } else this.setState({isListEnd: true, isLoading: false});
-        })
-        .catch(err => {
-          // console.log('this is the error: ', err);
-          this.setState({isLoading: false});
+
+    let calcSkip = onEndReachCall ? skip + profiles.length : 0;
+
+    let data = {
+      searchType: 'LEADERBOARD',
+      limit: LIMIT,
+      skip: calcSkip.toString(),
+    };
+    console.log(data);
+    // console.log(header);
+    actions
+      .getProfiles(data)
+      .then(res => {
+        // console.log('this is the response: ', res);
+        let updatedStateVar = {};
+        if (res.data.length > 0) {
+          let profilesData = onEndReachCall
+            ? [...profiles, ...res.data]
+            : res.data;
+
+          updatedStateVar = {
+            profiles: profilesData,
+          };
+        } else {
+          updatedStateVar = {
+            isListEnd: true,
+            isNoMoreData: true,
+          };
+        }
+
+        this.setState({
+          ...updatedStateVar,
+          isLoading: false,
+          isLoadingMore: false,
+          refreshing: false,
         });
-    }
+      })
+      .catch(err => {
+        // console.log('this is the error: ', err);
+        this.setState({isLoading: false, isLoadingMore: false});
+      });
   };
 
-  getAge = dob => {
-    let now = new Date();
-    let date = new Date(dob);
-    const age = now.getFullYear() - date.getFullYear();
-    return age;
+  _onRefresh = () => {
+    this.setState({refreshing: true, isNoMoreData: false});
+    this.getData();
   };
 
-  _renderItem = ({item, index}) => (
-    <View style={styles.itemContainer}>
-      <Image
-        source={{uri: item.profileImg[0].thumbnail}}
-        style={{height: 130}}
+  isLastSingleItem = index => {
+    const {profiles} = this.state;
+    return profiles.length - 1 === index && index % 2 === 0;
+  };
+
+  _renderItem = ({item, index}) => {
+    const styles = getStyleSheet(this.props.themeColor);
+    const colors = getColors(this.props.themeColor);
+    console.log();
+    return (
+      <Card
+        item={item}
+        styles={{
+          itemContainer: styles.itemContainer,
+          itemTextContainer: styles.itemTextContainer,
+        }}
+        isLastSingleItem={this.isLastSingleItem}
+        index={index}
+        colors={colors}
+        getAge={getAge}
       />
-      <View style={styles.itemTextContainer}>
-        <Text style={{color: colors.blackOpacity80, fontWeight: 'bold'}}>
-          {item.firstName}
-        </Text>
-        <Text style={{color: colors.blackOpacity70}}>
-          Gender, {this.getAge(item.dob.fullDate)}
-        </Text>
-        <Text style={{color: colors.blackOpacity70}}>
-          {item.addressDetails.city}
-        </Text>
-      </View>
-    </View>
-  );
+      // <View
+      //   style={[
+      //     styles.itemContainer,
+      //     this.isLastSingleItem(index) && {flex: 0.5},
+      //   ]}>
+      //   <Image
+      //     source={{uri: item.profileImg[0].thumbnail}}
+      //     style={{height: 150, borderTopLeftRadius: 8, borderTopRightRadius: 8}}
+      //   />
+      //   <View style={styles.itemTextContainer}>
+      //     <Text
+      //       style={{
+      //         color: colors.blackOpacity80,
+      //         fontWeight: 'bold',
+      //         paddingVertical: 4,
+      //         fontSize: 16,
+      //       }}>
+      //       {item.firstName}, {this.getAge(item.dob.fullDate)}
+      //     </Text>
+      //     <Text style={{color: colors.blackOpacity70}}>
+      //       {item.addressDetails.city}
+      //     </Text>
+      //   </View>
+      // </View>
+    );
+  };
 
+  renderFooter = () => {
+    const {isLoadingMore} = this.state;
+    if (isLoadingMore) {
+      return (
+        <View style={{paddingBottom: 40}}>
+          <MaterialIndicator color={colors.themeGreen} />
+        </View>
+      );
+    }
+    return <View style={{height: 50}} />;
+  };
+
+  onEndReached = () => {
+    const {isLoadingMore, isNoMoreData} = this.state;
+
+    if (isLoadingMore || isNoMoreData) {
+      return;
+    }
+    this.setState({isLoadingMore: true});
+    this.getData(true);
+  };
   render() {
     console.log(this.props.profiles);
+    const styles = getStyleSheet(this.props.themeColor);
+    const colors = getColors(this.props.themeColor);
     // console.log('this is the user data: ');
-    const {isLoading, profiles, Data} = this.state;
+    const {isLoading, profiles, Data, isLoadingMore, refreshing} = this.state;
     return (
       <WrapperContainer isLoading={isLoading}>
         <View style={styles.headerContainer}>
@@ -105,12 +179,21 @@ class Profiles extends Component {
             />
             <Text style={styles.headerTextStyle}>{strings.BACK}</Text>
           </TouchableOpacity>
-          <TextInput
+          <TouchableOpacity
+            style={{flex: 0.6}}
+            activeOpacity={0.5}
+            onPress={() =>
+              this.props.navigation.navigate(navigationStrings.SearchProfiles)
+            }>
+            <Text style={styles.searchTextStyle}>{strings.SEARCH}</Text>
+          </TouchableOpacity>
+          {/* <TextInput
             placeholder={strings.SEARCH}
             style={styles.searchBoxStyle}
             placeholderTextColor={colors.themeWhite}
-          />
-          <TouchableOpacity style={{flex: 0.1}}>
+          /> */}
+          <TouchableOpacity
+            style={{flex: 0.2, alignItems: 'flex-end', paddingRight: 8}}>
             <MaterialCommunityIcons
               name="filter-outline"
               size={30}
@@ -119,12 +202,20 @@ class Profiles extends Component {
           </TouchableOpacity>
         </View>
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }
           data={profiles}
           renderItem={this._renderItem}
           keyExtractor={item => item._id}
           numColumns={2}
-          onEndReachedThreshold={0.5}
-          onEndReached={this.getData}
+          onEndReachedThreshold={0.8}
+          onEndReached={this.onEndReached}
+          bounces={false}
+          ListFooterComponent={this.renderFooter}
         />
       </WrapperContainer>
     );
@@ -135,6 +226,7 @@ const mapStateToProps = state => {
   return {
     userData: state.authReducer.userData,
     profiles: state.profileReducer.profiles,
+    themeColor: state.homeReducer.themeColor,
   };
 };
 

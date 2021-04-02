@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ReduxApi</string>
+    <string name="app_name">Bingo</string>
+    <string name="facebook_app_id">486051359197224</string>
+    <string name="fb_login_protocol_scheme">fb486051359197224</string>
 </resources>

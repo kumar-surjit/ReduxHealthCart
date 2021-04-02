@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 export default function Routes() {
   const userData = useSelector(state => state.authReducer.userData);
-  // console.log('USE SELECTOR : ', userData);
+  console.log('USE SELECTOR : ', userData);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={navigationStrings.LandingPage}>

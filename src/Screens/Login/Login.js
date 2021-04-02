@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../styles/colors';
-import InputText from '../../Components/InputText';
+import InputTextWithLabel from '../../Components/InputTextWithLabel';
 import AuthButton from '../../Components/AuthButton';
 import OAuthButton from '../../Components/OAuthButton';
 import navigationStrings from '../../constants/navigationStrings';
@@ -10,6 +10,7 @@ import {showMessage, hideMessage} from 'react-native-flash-message';
 import actions from '../../redux/actions';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
+import {LoginButton, AccessToken} from 'react-native-fbsdk';
 
 export default class Login extends Component {
   state = {
@@ -101,14 +102,14 @@ export default class Login extends Component {
         <View style={{backgroundColor: colors.anotherLightGray, height: 1.5}} />
         <View style={styles.contentContainer}>
           <View style={{marginVertical: 15}}>
-            <InputText
+            <InputTextWithLabel
               placeholder={strings.ENTER_EMAIL}
               style={styles.inputTextStyle}
               focus={false}
               type="email"
               changeState={this.changeState}
             />
-            <InputText
+            <InputTextWithLabel
               placeholder={strings.ENTER_PASSWORD}
               style={[styles.inputTextStyle, {marginTop: 16}]}
               focus={false}
@@ -116,7 +117,7 @@ export default class Login extends Component {
               secure={true}
               changeState={this.changeState}
             />
-            <InputText
+            <InputTextWithLabel
               placeholder={strings.ENTER_PHONE}
               style={[styles.inputTextStyle, {marginTop: 16}]}
               focus={false}
@@ -159,17 +160,32 @@ export default class Login extends Component {
             </View>
             <View style={{flexDirection: 'row', marginTop: 50}}>
               <TouchableOpacity
-                style={[
-                  styles.oAuthButtonStyle,
-                  {
-                    borderColor: colors.darkBlue,
-                    marginRight: 12,
-                  },
-                ]}>
-                <OAuthButton
+                // style={[
+                //   styles.oAuthButtonStyle,
+                //   {
+                //     borderColor: colors.darkBlue,
+                //     marginRight: 12,
+                //   },
+                // ]}
+                style={{flex: 0.4, marginRight: 20}}>
+                {/* <OAuthButton
                   iconName="facebook"
                   color={colors.darkBlue}
                   label="Facebook"
+                /> */}
+                <LoginButton
+                  onLoginFinished={(error, result) => {
+                    if (error) {
+                      console.log('login has error: ' + result.error);
+                    } else if (result.isCancelled) {
+                      console.log('login is cancelled.');
+                    } else {
+                      AccessToken.getCurrentAccessToken().then(data => {
+                        console.log(data.accessToken.toString());
+                      });
+                    }
+                  }}
+                  onLogoutFinished={() => console.log('logout.')}
                 />
               </TouchableOpacity>
               <TouchableOpacity
