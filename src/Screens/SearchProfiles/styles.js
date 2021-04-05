@@ -37,13 +37,20 @@ export function getStyleSheet(mainColor) {
       paddingTop: 4,
     },
     loaderContainer: {
+      marginLeft: 8,
+    },
+    containerStyle: {
+      backgroundColor: colors.themeGreen,
+      padding: 12,
+      borderRadius: 50,
       position: 'absolute',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      alignItems: 'center',
-      justifyContent: 'center',
+      bottom: 16,
+      right: 8,
+    },
+    imageStyle: {
+      width: 30,
+      height: 30,
+      resizeMode: 'contain',
     },
   });
 }

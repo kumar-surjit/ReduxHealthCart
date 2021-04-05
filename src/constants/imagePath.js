@@ -27,6 +27,7 @@ export default {
   bell: require('../assets/images/bell.png'),
   logo: require('../assets/images/logo.png'),
   profile: require('../assets/images/profile.png'),
+  nearby_profiles: require('../assets/images/nearby-profiles.png'),
   ic_empty_cart: require('../assets/images/empty.jpg'),
   image_bg: require('../assets/images/image-bg.jpg'),
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),

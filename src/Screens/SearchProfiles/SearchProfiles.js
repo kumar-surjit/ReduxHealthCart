@@ -11,6 +11,8 @@ import Card from '../../Components/Card';
 import {getAge} from '../../utils/helperFunctions';
 import Geolocation from 'react-native-geolocation-service';
 import {locationPermission} from '../../utils/permissions';
+import FloatingButton from '../../Components/FloatingButton';
+import imagePath from '../../constants/imagePath';
 
 class SearchProfiles extends Component {
   state = {
@@ -53,17 +55,17 @@ class SearchProfiles extends Component {
   }
 
   startTimer = (counter, val) => {
-    counter = counter + 20;
-    if (counter === 40) {
-      console.log('50 MilliSeconds passed' + val);
-      if (val !== '') this.makeRequest(val);
+    if (counter === 200) {
+      console.log('200 MilliSeconds passed' + val);
+      if (val !== '') this.makeRequest(val, true);
       else {
         this.setState({profiles: []});
       }
       return;
     } else {
+      counter = counter + 100;
       this.setState({
-        handler: setTimeout(() => this.startTimer(counter, val), 20),
+        handler: setTimeout(() => this.startTimer(counter, val), 100),
       });
     }
     console.log(counter);
@@ -80,10 +82,12 @@ class SearchProfiles extends Component {
     return profiles.length - 1 === index && index % 2 === 0;
   };
 
-  makeRequest = val => {
+  makeRequest = (val, isSearch) => {
     const {longitude, latitude} = this.state;
-    let locationQuery = `&coordinates=[${longitude}, ${latitude}]`;
-    let queryParams = '?name=' + val + locationQuery;
+    if (!isSearch) this.setState({isLoading: true});
+    let locationQuery = `coordinates=[${longitude}, ${latitude}]`;
+    let nameParams = 'name=' + val;
+    let queryParams = '?' + (isSearch ? nameParams : locationQuery);
     console.log(queryParams);
     actions
       .searchProfile(queryParams)
@@ -145,6 +149,11 @@ class SearchProfiles extends Component {
             placeholderTextColor={colors.white}
             onChangeText={this._onChangeText}
           />
+          {isLoading && (
+            <View style={styles.loaderContainer}>
+              <MaterialIndicator color={colors.themeGreen} />
+            </View>
+          )}
         </View>
         <FlatList
           data={profiles}
@@ -153,11 +162,12 @@ class SearchProfiles extends Component {
           bounces={false}
           numColumns={2}
         />
-        {isLoading && (
-          <View style={styles.loaderContainer}>
-            <MaterialIndicator color={colors.themeGreen} />
-          </View>
-        )}
+        <FloatingButton
+          containerStyle={styles.containerStyle}
+          imageStyle={styles.imageStyle}
+          imageSrc={imagePath.nearby_profiles}
+          onClick={this.makeRequest}
+        />
       </View>
     );
   }
