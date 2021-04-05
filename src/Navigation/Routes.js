@@ -13,9 +13,7 @@ export default function Routes() {
   console.log('USE SELECTOR : ', userData);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={navigationStrings.LandingPage}>
-        {userData !== null ? MainStack() : AuthStack()}
-      </Stack.Navigator>
+      {userData !== null ? MainStack() : AuthStack()}
     </NavigationContainer>
   );
 }

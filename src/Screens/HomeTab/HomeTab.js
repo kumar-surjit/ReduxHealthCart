@@ -176,7 +176,8 @@ class HomeTab extends Component {
         <ScrollView>
           <View style={styles.appBarContainer}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.toggleDrawer()}>
                 <MaterialCommunityIcons
                   name="menu"
                   color={colors.themeDarkGreen}

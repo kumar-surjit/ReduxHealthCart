@@ -1,13 +1,19 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import navigationStrings from '../constants/navigationStrings';
-import {Login, SignUp, LandingPage, AuthPage, OtpVerification} from '../Screens';
+import {
+  Login,
+  SignUp,
+  LandingPage,
+  AuthPage,
+  OtpVerification,
+} from '../Screens';
 
 const Stack = createStackNavigator();
 
 export default function AuthStack() {
   return (
-    <>
+    <Stack.Navigator initialRouteName={navigationStrings.LandingPage}>
       <Stack.Screen
         name={navigationStrings.Login}
         component={Login}
@@ -33,6 +39,6 @@ export default function AuthStack() {
         component={OtpVerification}
         options={{headerShown: false}}
       />
-    </>
+    </Stack.Navigator>
   );
 }

@@ -3,6 +3,7 @@ export default {
   SignUp: 'SignUp',
   LandingPage: 'LandingPage',
   AuthPage: 'AuthPage',
+  NavDrawer: 'NavDrawer',
   TabRoutes: 'TabRoutes',
   HomeTab: 'HomeTab',
   ProfileTab: 'ProfileTab',

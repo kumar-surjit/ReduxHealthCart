@@ -3,15 +3,16 @@ import {Cart, SearchProfiles} from '../Screens';
 import navigationStrings from '../constants/navigationStrings';
 import {createStackNavigator} from '@react-navigation/stack';
 import TabRoutes from './TabRoutes';
+import NavDrawer from './NavDrawer';
 
 const Stack = createStackNavigator();
 
 export default function MainStack() {
   return (
-    <>
+    <Stack.Navigator>
       <Stack.Screen
-        name={navigationStrings.TabRoutes}
-        component={TabRoutes}
+        name={navigationStrings.NavDrawer}
+        component={NavDrawer}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -30,6 +31,6 @@ export default function MainStack() {
           headerShown: false,
         }}
       />
-    </>
+    </Stack.Navigator>
   );
 }
