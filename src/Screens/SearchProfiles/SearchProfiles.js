@@ -9,13 +9,48 @@ import {MaterialIndicator} from 'react-native-indicators';
 import actions from '../../redux/actions';
 import Card from '../../Components/Card';
 import {getAge} from '../../utils/helperFunctions';
+import Geolocation from 'react-native-geolocation-service';
+import {locationPermission} from '../../utils/permissions';
 
 class SearchProfiles extends Component {
   state = {
     profiles: [],
     isLoading: false,
     handler: undefined,
+    latitude: null,
+    longitude: null,
   };
+
+  getCurrentLocation = hasLocationPermission => {
+    // console.log(hasLocationPermission);
+    if (hasLocationPermission) {
+      Geolocation.getCurrentPosition(
+        position => {
+          this.setState({
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude,
+          });
+          console.log(position);
+        },
+        error => {
+          // See error code charts below.
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    }
+  };
+
+  componentDidMount() {
+    locationPermission()
+      .then(res => {
+        console.log(res);
+        this.getCurrentLocation(res === 'granted');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   startTimer = (counter, val) => {
     counter = counter + 20;
@@ -46,7 +81,10 @@ class SearchProfiles extends Component {
   };
 
   makeRequest = val => {
-    let queryParams = '?name=' + val;
+    const {longitude, latitude} = this.state;
+    let locationQuery = `&coordinates=[${longitude}, ${latitude}]`;
+    let queryParams = '?name=' + val + locationQuery;
+    console.log(queryParams);
     actions
       .searchProfile(queryParams)
       .then(res => {
@@ -92,6 +130,7 @@ class SearchProfiles extends Component {
   };
 
   render() {
+    // console.log('LOCATION: ', this.state.longitude, this.state.latitude);
     const styles = getStyleSheet(this.props.themeColor);
     const colors = getColors(this.props.themeColor);
     const {isLoading, profiles} = this.state;
