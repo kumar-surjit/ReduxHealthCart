@@ -1,5 +1,5 @@
 import React from 'react';
-import {Cart, SearchProfiles} from '../Screens';
+import {Cart, SearchProfiles, ViewImage} from '../Screens';
 import navigationStrings from '../constants/navigationStrings';
 import {createStackNavigator} from '@react-navigation/stack';
 import TabRoutes from './TabRoutes';
@@ -13,6 +13,11 @@ export default function MainStack() {
       <Stack.Screen
         name={navigationStrings.NavDrawer}
         component={NavDrawer}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ViewImage}
+        component={ViewImage}
         options={{headerShown: false}}
       />
       <Stack.Screen

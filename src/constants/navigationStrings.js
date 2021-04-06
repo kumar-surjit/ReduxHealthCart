@@ -6,6 +6,7 @@ export default {
   NavDrawer: 'NavDrawer',
   TabRoutes: 'TabRoutes',
   HomeTab: 'HomeTab',
+  ViewImage: 'ViewImage',
   ProfileTab: 'ProfileTab',
   Cart: 'Cart',
   OtpVerification: 'OtpVerification',

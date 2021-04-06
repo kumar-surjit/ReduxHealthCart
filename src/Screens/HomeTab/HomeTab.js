@@ -10,6 +10,7 @@ import {
   FlatList,
   Dimensions,
   ScrollView,
+  Modal,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import imagePath from '../../constants/imagePath';
@@ -21,10 +22,13 @@ import navigationStrings from '../../constants/navigationStrings';
 import {showMessage} from 'react-native-flash-message';
 import styles from './styles';
 import strings from '../../constants/lang';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 class HomeTab extends Component {
   state = {
     activeSlide: 0,
+    visiblity: false,
+    images: [],
   };
 
   addToCart = product => {
@@ -61,6 +65,28 @@ class HomeTab extends Component {
     // console.log(currentQuantity);
   };
 
+  openImage = item => {
+    const {visiblity} = this.state;
+    console.log(item);
+    let updatedImages = [];
+    item.imageCarousel.forEach(val => {
+      let temp = {url: val};
+      temp.width = 200;
+      temp.height = 200;
+      updatedImages.push(temp);
+    });
+    this.setState({images: updatedImages, visiblity: !visiblity});
+    console.log('UPDATED IMAGES : ', updatedImages);
+    // this.props.navigation.navigate(navigationStrings.ViewImage, {
+    //   images: item.imageCarousel,
+    // });
+  };
+
+  toggleVisibility = () => {
+    const {visiblity} = this.state;
+    this.setState({visiblity: !visiblity});
+  };
+
   _renderItem = ({item, index}) => {
     return (
       <View style={{justifyContent: 'center'}}>
@@ -90,17 +116,21 @@ class HomeTab extends Component {
           {item.stock} {strings.LEFT}
         </Text>
       </View>
-      <ImageBackground source={item.coverImg} style={{height: 150}}>
-        <Text style={styles.productDiscountContainer}>{item.discount}</Text>
-        <View style={styles.ratingContianer}>
-          <Text style={styles.ratingText}>{item.rating}</Text>
-          <MaterialCommunityIcons
-            name="star"
-            size={10}
-            color={colors.themeGreen}
-          />
-        </View>
-      </ImageBackground>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => this.openImage(item)}>
+        <ImageBackground source={item.coverImg} style={{height: 150}}>
+          <Text style={styles.productDiscountContainer}>{item.discount}</Text>
+          <View style={styles.ratingContianer}>
+            <Text style={styles.ratingText}>{item.rating}</Text>
+            <MaterialCommunityIcons
+              name="star"
+              size={10}
+              color={colors.themeGreen}
+            />
+          </View>
+        </ImageBackground>
+      </TouchableOpacity>
       <Text numberOfLines={2} style={{marginTop: 4}}>
         {item.name}
       </Text>
@@ -170,7 +200,7 @@ class HomeTab extends Component {
   );
 
   render() {
-    const {activeSlide} = this.state;
+    const {activeSlide, visiblity, images} = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
@@ -263,6 +293,16 @@ class HomeTab extends Component {
             style={{paddingLeft: 8}}
             showsHorizontalScrollIndicator={false}
           />
+          <Modal
+            visible={visiblity}
+            transparent={true}
+            onRequestClose={this.toggleVisibility}>
+            <ImageViewer
+              imageUrls={images}
+              renderIndicator={() => null}
+              backgroundColor={colors.whiteOpacity77}
+            />
+          </Modal>
         </ScrollView>
       </SafeAreaView>
     );
