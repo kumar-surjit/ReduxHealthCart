@@ -38,4 +38,8 @@ export default {
   back: require('../assets/images/ic_back.png'),
   backWithSquare: require('../assets/images/backWithSquare.png'),
   rightBlue: require('../assets/images/ic_goA.png'),
+  ic_flash: require('../assets/images/flash.png'),
+  ic_flash_auto: require('../assets/images/flash-auto.png'),
+  ic_no_flash: require('../assets/images/no-flash.png'),
+  ic_torch: require('../assets/images/torch.png'),
 };

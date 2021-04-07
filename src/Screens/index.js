@@ -9,3 +9,4 @@ export {default as Profiles} from './Profiles/Profiles';
 export {default as SearchProfiles} from './SearchProfiles/SearchProfiles';
 export {default as Cart} from './Cart/Cart';
 export {default as OtpVerification} from './OtpVerification/OtpVerification';
+export {default as QrScanner} from './QrScanner/QrScanner';

@@ -12,4 +12,5 @@ export default {
   OtpVerification: 'OtpVerification',
   Profiles: 'Profiles',
   SearchProfiles: 'SearchProfiles',
+  QrScanner: 'QrScanner',
 };

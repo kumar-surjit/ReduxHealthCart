@@ -1,5 +1,5 @@
 import React from 'react';
-import {Cart, SearchProfiles, ViewImage} from '../Screens';
+import {Cart, SearchProfiles, ViewImage, QrScanner} from '../Screens';
 import navigationStrings from '../constants/navigationStrings';
 import {createStackNavigator} from '@react-navigation/stack';
 import TabRoutes from './TabRoutes';
@@ -35,6 +35,11 @@ export default function MainStack() {
         options={{
           headerShown: false,
         }}
+      />
+      <Stack.Screen
+        name={navigationStrings.QrScanner}
+        component={QrScanner}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
