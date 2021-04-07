@@ -275,7 +275,10 @@ class Profile extends Component {
             style={[
               styles.singleLinkBox,
               {borderBottomWidth: 0.5, borderBottomColor: '#c5c5c5'},
-            ]}>
+            ]}
+            onPress={() =>
+              this.props.navigation.navigate(navigationStrings.QrScanner)
+            }>
             <View style={styles.quickLinkImage}>
               <Image
                 source={imagePath.bell}
