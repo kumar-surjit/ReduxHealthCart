@@ -12,6 +12,17 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  messageIconContainer: {
+    borderRadius: 20,
+    backgroundColor: colors.lightGreen,
+    padding: 4,
+  },
+  iconContainerQr: {
+    borderRadius: 20,
+    backgroundColor: colors.lightGreen,
+    padding: 4,
+    marginLeft: 8,
+  },
   logoStyle: {
     width: 25,
     height: 25,

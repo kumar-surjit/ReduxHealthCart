@@ -82,6 +82,10 @@ class HomeTab extends Component {
     // });
   };
 
+  openScanner = () => {
+    this.props.navigation.navigate(navigationStrings.QrScanner);
+  };
+
   toggleVisibility = () => {
     const {visiblity} = this.state;
     this.setState({visiblity: !visiblity});
@@ -217,17 +221,17 @@ class HomeTab extends Component {
               <Image source={imagePath.logo} style={styles.logoImage} />
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 20,
-                  backgroundColor: colors.lightGreen,
-                  padding: 4,
-                }}>
+              <TouchableOpacity style={styles.messageIconContainer}>
                 <MaterialCommunityIcons
                   name="message-outline"
                   color={colors.themeDarkGreen}
                   size={20}
                 />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.iconContainerQr}
+                onPress={this.openScanner}>
+                <MaterialCommunityIcons name="qrcode-scan" size={22} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={{marginLeft: 16}}
