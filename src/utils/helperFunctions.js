@@ -1,5 +1,6 @@
 import {showMessage} from 'react-native-flash-message';
 import {Linking, Platform, PermissionsAndroid} from 'react-native';
+import moment from 'moment';
 // import Geolocation from 'react-native-geolocation-service';
 
 // export const getCurrentLocation = () =>
@@ -88,6 +89,10 @@ export function getAge(dob) {
   let date = new Date(dob);
   const age = now.getFullYear() - date.getFullYear();
   return age;
+}
+
+export function getTimeFromMilli(milliSec) {
+  return moment(milliSec).format('LT');
 }
 
 export {showError, showSuccess};

@@ -17,17 +17,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import strings from '../../constants/lang';
 import ThemeCard from '../../Components/ThemeCard';
 import {getStyleSheet} from './styles';
+import QRCode from 'react-native-qrcode-svg';
 
 class Profile extends Component {
   state = {
     modalVisible: false,
     cardColors: ['Green', 'Blue'],
+    qrModalVisible: false,
   };
 
   setModalVisible = () => {
     const {modalVisible} = this.state;
     this.setState({
       modalVisible: !modalVisible,
+    });
+  };
+
+  setQrVisible = () => {
+    const {qrModalVisible} = this.state;
+    this.setState({
+      qrModalVisible: !qrModalVisible,
     });
   };
 
@@ -86,7 +95,7 @@ class Profile extends Component {
   };
 
   render() {
-    const {modalVisible, cardColors} = this.state;
+    const {modalVisible, cardColors, qrModalVisible} = this.state;
     const styles = getStyleSheet(this.props.themeColor);
     const colors = getColors(this.props.themeColor);
     return (
@@ -113,6 +122,22 @@ class Profile extends Component {
                 />
               </TouchableOpacity>
             </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={qrModalVisible}
+          onRequestClose={() => {
+            this.qrModalVisible(!qrModalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <QRCode
+              //QR code value
+              value="Surjit Kumar Profile"
+              //size of QR Code
+              size={250}
+            />
           </View>
         </Modal>
         <View style={styles.appBarContainer}>
@@ -173,10 +198,19 @@ class Profile extends Component {
               </TouchableOpacity>
               <View
                 style={{paddingHorizontal: 8, justifyContent: 'flex-start'}}>
-                <Text
-                  style={{fontSize: 20, fontWeight: 'bold', marginBottom: 8}}>
-                  {strings.PROFILE_NAME}
-                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{fontSize: 20, fontWeight: 'bold', marginBottom: 8}}>
+                    {strings.PROFILE_NAME}
+                  </Text>
+                  <TouchableOpacity activeOpacity={0.5}>
+                    <MaterialCommunityIcons name="qrcode" size={22} />
+                  </TouchableOpacity>
+                </View>
                 <View
                   style={{
                     flexDirection: 'row',

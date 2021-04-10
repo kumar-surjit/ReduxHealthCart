@@ -15,6 +15,11 @@ export default function AuthStack() {
   return (
     <Stack.Navigator initialRouteName={navigationStrings.LandingPage}>
       <Stack.Screen
+        name={navigationStrings.LandingPage}
+        component={LandingPage}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name={navigationStrings.Login}
         component={Login}
         options={{headerShown: false}}
@@ -24,11 +29,7 @@ export default function AuthStack() {
         component={SignUp}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.LandingPage}
-        component={LandingPage}
-        options={{headerShown: false}}
-      />
+
       <Stack.Screen
         name={navigationStrings.AuthPage}
         component={AuthPage}

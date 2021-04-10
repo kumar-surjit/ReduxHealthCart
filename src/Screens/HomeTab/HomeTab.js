@@ -221,7 +221,11 @@ class HomeTab extends Component {
               <Image source={imagePath.logo} style={styles.logoImage} />
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity style={styles.messageIconContainer}>
+              <TouchableOpacity
+                style={styles.messageIconContainer}
+                onPress={() =>
+                  this.props.navigation.navigate(navigationStrings.Messages)
+                }>
                 <MaterialCommunityIcons
                   name="message-outline"
                   color={colors.themeDarkGreen}

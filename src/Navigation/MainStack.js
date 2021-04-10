@@ -1,5 +1,12 @@
 import React from 'react';
-import {Cart, SearchProfiles, ViewImage, QrScanner} from '../Screens';
+import {
+  Cart,
+  SearchProfiles,
+  ViewImage,
+  QrScanner,
+  Messages,
+  ChatRoom,
+} from '../Screens';
 import navigationStrings from '../constants/navigationStrings';
 import {createStackNavigator} from '@react-navigation/stack';
 import TabRoutes from './TabRoutes';
@@ -18,6 +25,17 @@ export default function MainStack() {
       <Stack.Screen
         name={navigationStrings.ViewImage}
         component={ViewImage}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.Messages}
+        component={Messages}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ChatRoom}
+        component={(Messages, ChatRoom)}
         options={{headerShown: false}}
       />
       <Stack.Screen

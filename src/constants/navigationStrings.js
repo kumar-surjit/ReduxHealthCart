@@ -7,6 +7,8 @@ export default {
   TabRoutes: 'TabRoutes',
   HomeTab: 'HomeTab',
   ViewImage: 'ViewImage',
+  Messages: 'Messages',
+  ChatRoom: 'ChatRoom',
   ProfileTab: 'ProfileTab',
   Cart: 'Cart',
   OtpVerification: 'OtpVerification',

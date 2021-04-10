@@ -12,7 +12,7 @@ export async function getHeaders() {
     userData = JSON.parse(userData);
     // console.log(userData.token, 'header');
     return {
-      authorization: `Bearer ${userData.data.accessToken}`,
+      authorization: `Bearer ${userData.accessToken}`,
     };
   }
   return {};

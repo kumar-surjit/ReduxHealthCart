@@ -188,6 +188,7 @@ function App({navigation, route}) {
             rootStyle={styles.codeFieldRoot}
             keyboardType="number-pad"
             textContentType="oneTimeCode"
+            autoFocus={true}
             renderCell={({index, symbol, isFocused}) => (
               <Text
                 key={index}

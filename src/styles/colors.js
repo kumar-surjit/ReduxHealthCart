@@ -25,6 +25,7 @@ export default {
   blackOpacity0: 'rgba(0,0,0,0)',
   blackOpacity43: 'rgba(0,0,0,0.43)',
   blackOpacity86: 'rgba(0,0,0,0.86)',
+  blackOpacity60: 'rgba(0,0,0,0.60)',
   blackOpacity70: 'rgba(0,0,0,0.70)',
   blackOpacity50: 'rgba(0,0,0,0.50)',
   blackOpacity80: 'rgba(0,0,0,0.80)',
@@ -116,5 +117,7 @@ export function getColors(mainColor) {
     darkRed: '#E53138',
     darkBlue: '#265164',
     lightWhite: '#F5F6F8',
+    grayOpacity50: 'rgba(128,128,128, .5)',
+    grayOpacity90: 'rgba(128,128,128, .9)',
   };
 }

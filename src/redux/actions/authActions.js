@@ -22,7 +22,7 @@ export function signUp(data) {
   return new Promise((resolve, reject) => {
     console.log(data);
     storeData(tempData);
-    dispatch({type: actionTypes.LOGGED_IN, payload: {isLoggedIn: true}});
+    dispatch({type: actionTypes.SAVE_USER_DATA, payload: {userData: res.data}});
     resolve(data);
     // apiPost(SIGNUP, data)
     //   .then(res => {
@@ -57,8 +57,11 @@ export function verififyOtp(data) {
     apiPost(VERIFYOTP, data)
       .then(res => {
         console.log('Response: VerifyOTP ', res);
-        storeData(res);
-        dispatch({type: actionTypes.LOGGED_IN, payload: {isLoggedIn: true}});
+        storeData(res.data);
+        dispatch({
+          type: actionTypes.SAVE_USER_DATA,
+          payload: {userData: res.data},
+        });
         resolve(res);
       })
       .catch(err => {

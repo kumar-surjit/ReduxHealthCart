@@ -6,3 +6,7 @@ export const PHONELOGIN = 'https://api.talktier.com/user/v1/loginSignupOtp';
 export const VERIFYOTP = 'https://api.talktier.com/user/v1/verifyOtp';
 export const PROFILES = 'https://api.talktier.com/user/v1/getUserSearch';
 export const SEARCHPROFILE = 'https://api.talktier.com/user/v1/getUserNearMe';
+export const CHATCONVERSATIONS =
+  'https://api.talktier.com/user/v1/getAllConversations';
+export const CHATMESSAGES =
+  'https://api.talktier.com/user/v1/getConversationMessages';
